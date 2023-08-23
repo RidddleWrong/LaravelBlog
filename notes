@@ -1,0 +1,194 @@
+if use method = POST then use @csrf for sure
+
+dont forget to use Route::post() for Store
+
+Model method firstOrCreate: if key (which is column in the table) = the value (which is sent like validated data from form), then happens nothing.
+https://www.youtube.com/watch?v=FMpJ8-5pnUQ&list=PLd2_Os8Cj3t8StX6GztbdMIUXmgPuingB&index=8&ab_channel=LaravelCreative 5:53
+
+Вместо firstOrCreate проверить на уникальность можно в StoreRequest:
+в методе rules вернуть массив с ключом:
+'title' => 'required|string|unique:categories,title'
+
+название параметра отправляемого рутом должно сходиться с названием переменной в методе на которую мы передаем параметр:
+route('', ['category' => $cat->id); -> Route::get('/!!!{category}!!!', 'ShowController')
+
+SoftDelete мягкое удаление https://www.youtube.com/watch?v=zaLHfSKloUo&list=PLd2_Os8Cj3t8StX6GztbdMIUXmgPuingB&index=13&ab_channel=LaravelCreative
+1:53
+
+избавиться от фона у картинки корзины  https://www.youtube.com/watch?v=zaLHfSKloUo&list=PLd2_Os8Cj3t8StX6GztbdMIUXmgPuingB&index=14&ab_channel=LaravelCreative
+
+role="button" дает динамический стиль как у кнопки - когда наводишь мышку - курсор меняется на ручку
+
+class="bg-transparent" убирает свой собственный фон картинки и она подстраивается под фон родителя
+
+класс <a class="nav-link"> дает мозвожность поменять блочные элементы по типу тега р внутрь со строчными и они будут отображаться в одном ряде внутри тега а
+класс nav-icon дает небольшой отступ от картинки вправо
+
+summernote для post поста https://www.youtube.com/watch?v=VmNb8s3dP-o&list=PLd2_Os8Cj3t8StX6GztbdMIUXmgPuingB&index=19&ab_channel=LaravelCreative
+
+добавление столбцов картинок в базу данных миграцией https://www.youtube.com/watch?v=oCwP0PsHmUk&list=PLd2_Os8Cj3t8StX6GztbdMIUXmgPuingB&index=18&ab_channel=LaravelCreative
+
+.custom-file-input:lang(en)~.custom-file-label::after{
+        content: '...';
+    }
+
+exists:'название таблицы','название поля с которым ищет совпадение ключ' : 'category_id' => 'required|exists:categories,id',
+
+multi tags connection at the beg(also u need to paste $('.select2').select2() in the end script code) https://www.youtube.com/watch?v=26eWqiyJVJQ&list=PLd2_Os8Cj3t8StX6GztbdMIUXmgPuingB&index=19&ab_channel=LaravelCreative
+
+php artisan storage:link создает storage -> app -> public, а так же public -> storage(папку-ссылку) на содержимой созданной папки storage -> app -> public
+Чтобы обратиться к картинке мы обращаемся к public -> storage -> images (которая будет создана в storage -> app -> public (images) )
+С помощью метода asset or url : url('storage/' , $post->preview_image)
+
+image img нужно указывать w-(25,50,75) параметр ширины самому тегу img. Так же на ширину влияет ширина родительского блока. <div class="w-50"><img class="w-25"> w-50 уменьшит ширину картинки ещё на 50% от 25%
+
+w-* класс отсчитывает ширину относительно БЛИЖАЙШЕГО РОДИТЕЛЬСКОГО блока.
+
+$post->tags() код указан в Post модели
+
+$post->tags()->sync($tagIds); если у текущего поста $post айдишники его тегов (которые хранятся в таблице post_tags) не совпадают с айди тегов из $tagIds(то есть с новыми выбранными тегами), то они удаляются, в итоге остаются только теги из $tagIds
+
+$post->tags->pluck('id')->toArray() - метод pluck возвращает колекцию из указанной колонки. Аналог array_column(), только для колекции.
+
+Storage::disk('public') - аналог asset и подобных. Перебрасывает нас в папку Storage -> app. В скобках указываем папку в которую переходим или создаем.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Как поменять текст для выводимой ошибки связанной с html и валидацией 1:00 https://www.youtube.com/watch?v=w8r_Snt76N8&list=PLd2_Os8Cj3t8StX6GztbdMIUXmgPuingB&index=23&ab_channel=LaravelCreative
+
+Hash::make($data['password']); in $data['password'] = Hash::make($data['password']); - хеширует пароль
+
+const RULE_ADMIN = 0 const RULE_READER = 1 and public function getRules() used in User model for role system.
+В protected $fillable в User model нужно добавить 'role',
+
+Middleware - https://www.youtube.com/watch?v=qNPT0u7Nqf0&list=PLd2_Os8Cj3t8StX6GztbdMIUXmgPuingB&index=28&ab_channel=LaravelCreative
+
+выход logout отображение 8 20 https://www.youtube.com/watch?v=qNPT0u7Nqf0&list=PLd2_Os8Cj3t8StX6GztbdMIUXmgPuingB&index=29&ab_channel=LaravelCreative
+
+php artisan make:mail User/PasswordMail -m mail.user.password почта отправка пароля на почту https://www.youtube.com/watch?v=sGY35rfCSbA&list=PLd2_Os8Cj3t8StX6GztbdMIUXmgPuingB&index=29&ab_channel=LaravelCreative
+
+после этого public function __invoke(StoreRequest $request)
+               {
+                   $data = $request->validated();
+                   $password = Str::random(10);
+                   $data['password'] = Hash::make($password);
+                   User::firstOrCreate(['email' => $data['email']],$data);
+                   Mail::to($data['email'])->send(new PasswordMail($password));
+                   return redirect()->route('admin.user.index');
+               }
+не забываем удалить в валидации создания правила для пароля
+error ошибка может появиться, в этом случае в .env не забываем ставить пароль без *********asc432sd. На сайте mailtrap.io нужно просто нажать кнопку Copy и оно скопируется без *
+
+implements MustVerifyEmail, Auth::routes(['verify'=>true]); 'middleware' => ['auth', 'admin', 'verified'] - https://www.youtube.com/watch?v=njFqr4Si6H4&list=PLd2_Os8Cj3t8StX6GztbdMIUXmgPuingB&index=29&ab_channel=LaravelCreative
+
+event(new Registered($user)); verify verification https://www.youtube.com/watch?v=njFqr4Si6H4&list=PLd2_Os8Cj3t8StX6GztbdMIUXmgPuingB&index=30&ab_channel=LaravelCreative
+
+
+
+
+notification verification confirmation 29 Отправка писем с использованием очередей. Создаем свой Notification класс https://www.youtube.com/watch?v=kEa4ezXri4E&list=PLd2_Os8Cj3t8StX6GztbdMIUXmgPuingB&index=32&ab_channel=LaravelCreative
+
+1 php artisan queue:table - makes migration create_jobs_table
+2 php artisan make:notification SendVerifyWithQueueNotification
+-it makes app -> Notifications -> SendVerifyWithQueueNotification.php
+-and delete all in it except     use Queueable;
+-then add     implements ShouldQueue
+-replace extends Notification with VerifyEmail
+3 User model add method SendEmailVerificationNotification which we get from     MustVerifyEmail implements
+-$this notify(new SendVerifyWithQueueNotification());
+-in app - Notifications - SendVerifyWithQueueNotification.php
+4 In .env in QUEUE_CONNECTION = database for mysql
+5 new command                       php artisan queue:work              without it wont be registered new users wont work queue properly
+6 go check the verification
+-if seen problem: u are directing to localhost etc, then in .env make APP_URL=http://127.0.0.1:8000/
+-dont forget to restart php artisan serve and php artisan queue:work and then check for verification is gud and with no delay by doing Queue
+7 in User in StoreController in class PasswordMail add      implements ShouldQueue
+
+
+
+
+30
+1 php artisan make:job StoreUserJob - creates class file in app - Jobs
+2 cut-paste code we want to happen in Queue from StoreController to created higher file in handle().
+3 Add $data from StoreController as parameter in __construct($data)
+-dont forget to initialize $data by pressing alt Enter on it and choosing initialize
+-dont forget to add $this->data() instead of $data in copied code.
+
+
+
+
+31
+some style changes to admin.main
+if u want to count all your rows in table -> Model::all()->count(): $usersCount = User::all()->count();
+
+
+
+
+Likes 33. Структура в бд для лайков и их отображение в личном кабинете https://www.youtube.com/watch?v=A63CIidq_WM&list=PLd2_Os8Cj3t8StX6GztbdMIUXmgPuingB&index=36&ab_channel=LaravelCreative
+удаление лайкнутых постов Delete
+1 For testing purpose in post_user_likes create something by hands.
+2 php artisan make:model PostUserLikes -m
+-in created migration make rows for up()
+-in created model make protected $table = ... $guarded = true
+3 Make view for liked posts part for it by copying from admin -> posts -> show blade php
+*dont forget to change the routes in file like includes extends and add it to web php.
+4 Make Personal ->  Liked -> IndexController
+-auth()->user()->likedPosts;
+-go to User model and create likedPosts() {return $this->belongsToMany(...)}
+5 Go to web.php
+-dont forget to use Route::delete for delete button on the view page
+-make any name for id the main thing to be the same with $var name in parameter in DeleteController()
+6 Create Personal -> Liked -> DeleteController('use here model name for the thing u will detach, in our case Post model', $post)
+-auth()->user()->likedPosts()->detach($post->id)
+-redirect()->route();
+
+
+
+
+Comments 34. Структура в бд для комментариев и их отображение в личном кабинете
+1 php artisan make:model Comment -m
+-dont forget to add in model $table and $guarded = false, use SoftDelete if needed
+2 in comments migration fill up()
+3 add by hands in comments table for example
+4 work with views in    personal->comments by copying from liked and create controllers for it
+*dont forget to change variables in view
+-in edit blade php dont forget to use @method('patch') and use patch in web php
+-in IndexController use $comments = auth()->user()->comments;
+--create this method in User model comments(){return this hasMany();}
+-in DeleteController use $comment->delete();
+--then view index with compact('comment')
+-EditController
+-in UpdateController use $comment->update($data);
+5 create in web php for these controllers
+6 make      Requests->Personal->Comment->UpdateRequest by copying from Admin->Category then delete StoreRequest
+-look for changes u should do in this UpdateRequest
+7 UpdateController dont forget to link right UpdateRequest
+8 DeleteController
+
+
+
+
