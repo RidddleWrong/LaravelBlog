@@ -10,7 +10,7 @@ https://www.youtube.com/watch?v=FMpJ8-5pnUQ&list=PLd2_Os8Cj3t8StX6GztbdMIUXmgPui
 'title' => 'required|string|unique:categories,title'
 
 название параметра отправляемого рутом должно сходиться с названием переменной в методе на которую мы передаем параметр:
-route('', ['category' => $cat->id); -> Route::get('/!!!{category}!!!', 'ShowController')
+route('', ['category' => $cat->id); -> Route::get('/{category}', 'ShowController')
 
 SoftDelete мягкое удаление https://www.youtube.com/watch?v=zaLHfSKloUo&list=PLd2_Os8Cj3t8StX6GztbdMIUXmgPuingB&index=13&ab_channel=LaravelCreative
 1:53
@@ -82,7 +82,7 @@ Storage::disk('public') - аналог asset и подобных. Перебра
 
 Hash::make($data['password']); in $data['password'] = Hash::make($data['password']); - хеширует пароль
 
-const RULE_ADMIN = 0 const RULE_READER = 1 and public function getRules() used in User model for role system.
+const ROLE_ADMIN = 0 const ROLE_READER = 1 and public function getRules() used in User model for role system.
 В protected $fillable в User model нужно добавить 'role',
 
 Middleware - https://www.youtube.com/watch?v=qNPT0u7Nqf0&list=PLd2_Os8Cj3t8StX6GztbdMIUXmgPuingB&index=28&ab_channel=LaravelCreative
@@ -98,12 +98,13 @@ php artisan make:mail User/PasswordMail -m mail.user.password почта отп�
                    $data['password'] = Hash::make($password);
                    User::firstOrCreate(['email' => $data['email']],$data);
                    Mail::to($data['email'])->send(new PasswordMail($password));
+                   event(new Registered($user));//sends the verify link to user u have registered
                    return redirect()->route('admin.user.index');
                }
 не забываем удалить в валидации создания правила для пароля
-error ошибка может появиться, в этом случае в .env не забываем ставить пароль без *********asc432sd. На сайте mailtrap.io нужно просто нажать кнопку Copy и оно скопируется без *
+error ошибка может появиться, в этом случае в .env не забываем ставить пароль без звездочек: *********asc432sd. На сайте mailtrap.io нужно просто нажать кнопку Copy и оно скопируется без *
 
-implements MustVerifyEmail, Auth::routes(['verify'=>true]); 'middleware' => ['auth', 'admin', 'verified'] - https://www.youtube.com/watch?v=njFqr4Si6H4&list=PLd2_Os8Cj3t8StX6GztbdMIUXmgPuingB&index=29&ab_channel=LaravelCreative
+User: implements MustVerifyEmail, Web.php: Auth::routes(['verify'=>true]); 'middleware' => ['auth', 'admin', 'verified'] - https://www.youtube.com/watch?v=njFqr4Si6H4&list=PLd2_Os8Cj3t8StX6GztbdMIUXmgPuingB&index=29&ab_channel=LaravelCreative
 
 event(new Registered($user)); verify verification https://www.youtube.com/watch?v=njFqr4Si6H4&list=PLd2_Os8Cj3t8StX6GztbdMIUXmgPuingB&index=30&ab_channel=LaravelCreative
 
@@ -131,17 +132,19 @@ notification verification confirmation 29 Отправка писем с исп�
 
 
 
-30
-1 php artisan make:job StoreUserJob - creates class file in app - Jobs
-2 cut-paste code we want to happen in Queue from StoreController to created higher file in handle().
+30. Создаем класс Job. Пример работы с очередями любого алгоритма/действия
+1 php artisan make:job StoreUserJob - creates class file in app -> Jobs
+2 implements ShouldQueue
 3 Add $data from StoreController as parameter in __construct($data)
 -dont forget to initialize $data by pressing alt Enter on it and choosing initialize
--dont forget to add $this->data() instead of $data in copied code.
+-$this->data = $data; in constructor
+-cut-paste code we want to happen in Queue from StoreController to this file (item above) in handle().
+#f User/StoreController
+4 StoreUserJob::dispatch($data);
 
 
 
-
-31
+31. Делаем общие косметические изменения по дизайну и редиректам
 some style changes to admin.main
 if u want to count all your rows in table -> Model::all()->count(): $usersCount = User::all()->count();
 
@@ -192,3 +195,29 @@ Comments 34. Структура в бд для комментариев и их 
 
 
 
+
+
+Posts main 35. Вывод ленты постов. Случайные посты. Популярные посты. Пагинация
+1 $posts = Post::withCount('likedPosts')->get()->take(#number of rows to take from get());
+-create likedPosts() in Post model
+
+
+
+
+Data time 36. Работаем с датами и классом Carbon. Carbon даты. Добавляем схожие посты
+#o for chang lang purposes
+-Carbon::setLocale('ua_UA'); in AppServiceProvider boot()
+*$data = Carbon:parse($post->created_at); then compact it (if to do how in the course)
+#v1
+-{{ $post->author_name }}• {{ $post->created_at->translatedFormat/format('F') #e F stands for full month name displaying #e letter register does matter # }} {{ $post->created_at->day }} {{ $post->created_at->year }} {{ $post->created_at->format('H:i:s') #e H for 24 hour format i stands for minutes and s for seconds # }}
+in posts.show 6 row
+#f this is in app/Http/Controllers/Post/ShowController.php
+#v2
+-{{ $post->author_name }}• {{ $post->created_at->format/translatedFormat('F d Y H:i') }}
+#v1
+-$post->author_name = User::where('id', $post->author_id)->value('name');
+#v2
+-$post->author_name = $post->author->name;
+#d create author() in Post model
+-{!! $post->content !!}
+#e if the content has content = <tag>someTxt</tag>. In that case for correct displaying.
