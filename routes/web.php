@@ -1,7 +1,10 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
+
+Auth::routes(['verify' => true]);//verify true sends the verify link to user that registered himself
 
 Route::group(['namespace' => 'App\Http\Controllers\Post'], function () {
     Route::get('/', 'IndexController')->name('post.index');
@@ -10,6 +13,9 @@ Route::group(['namespace' => 'App\Http\Controllers\Post'], function () {
 Route::group(['namespace' => 'App\Http\Controllers\Post', 'prefix'=>'posts'], function () {
     Route::get('/', 'IndexController')->name('post.index');
     Route::get('/{post}', 'ShowController')->name('post.show');
+    Route::group(['namespace' => 'Comment', 'prefix'=>'{post}/comments'], function () {
+        Route::post('/', 'StoreController')->name('post.comment.store');
+    });
 });
 Route::group(['namespace' => 'App\Http\Controllers\Personal', 'prefix' => 'personal', 'middleware' => ['auth', 'verified']], function () {
     Route::group(['namespace' => 'Main', 'prefix'=>'main'], function () {
@@ -26,11 +32,7 @@ Route::group(['namespace' => 'App\Http\Controllers\Personal', 'prefix' => 'perso
         Route::delete('/{comment}', 'DeleteController')->name('personal.comment.delete');
     });
 });
-//middleware: the order you are writing middlewares in array in is important. If users is not authorized then he will get kicked out before reaching 'admin' part
-//middleware: makes the checkout.
-// Auth checks if u are logined, if not gives u login register form.
-//Admin checks if u are admin or not. if admin it let you to the namespace admin in our case.
-//verified checks out if you are verified by email. If not doesnt let u in namespace
+
 Route::group(['namespace' => 'App\Http\Controllers\Admin', 'prefix' => 'admin', 'middleware' => ['auth', 'admin', 'verified']], function () {
     Route::group(['namespace' => 'Main'], function () {
         Route::get('/', 'IndexController')->name('admin.main.index');
@@ -75,7 +77,6 @@ Route::group(['namespace' => 'App\Http\Controllers\Admin', 'prefix' => 'admin', 
     });
 });
 
-Auth::routes(['verify' => true]);//verify true sends the verify link to user that registered himself
 
 
 

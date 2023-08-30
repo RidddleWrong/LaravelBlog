@@ -31,7 +31,7 @@
                             @foreach($randomPosts as $post)
                                 <div class="col-md-6 blog-post" data-aos="fade-up">
                                     <div class="blog-post-thumbnail-wrapper">
-                                        <img src="{{ '/storage/'.$post->preview_image ??  asset('/assets/images/blog_7.jpg') }}" alt="blog post">
+                                        <img src="{{ $post->preview_image ? asset('/storage/'.$post->preview_image) : asset('/assets/images/blog_7.jpg') }}" alt="blog post">
                                     </div>
                                     <p class="blog-post-category">{{ $post->category->title }}</p>
                                     <a href="{{ route('post.show', $post->id) }}" class="blog-post-permalink">

@@ -48,7 +48,7 @@ $post->tags() код указан в Post модели
 
 $post->tags()->sync($tagIds); если у текущего поста $post айдишники его тегов (которые хранятся в таблице post_tags) не совпадают с айди тегов из $tagIds(то есть с новыми выбранными тегами), то они удаляются, в итоге остаются только теги из $tagIds
 
-$post->tags->pluck('id')->toArray() - метод pluck возвращает колекцию из указанной колонки. Аналог array_column(), только для колекции.
+$contains in laravel 8 and below $post->tags->pluck('id')->toArray() - метод pluck возвращает колекцию из указанной колонки. Аналог array_column(), только для колекции.
 
 Storage::disk('public') - аналог asset и подобных. Перебрасывает нас в папку Storage -> app. В скобках указываем папку в которую переходим или создаем.
 
@@ -61,7 +61,11 @@ Storage::disk('public') - аналог asset и подобных. Перебра
 
 
 
-
+//middleware: the order you are writing middlewares in array in is important. If users is not authorized then he will get kicked out before reaching 'admin' part
+//middleware: makes the checkout.
+//Auth checks if u are logined, if not gives u login register form.
+//Admin checks if u are admin or not. if admin it let you to the namespace admin in our case.
+//verified checks out if you are verified by email. If not doesnt let u in namespace
 
 
 
@@ -221,3 +225,33 @@ in posts.show 6 row
 #d create author() in Post model
 -{!! $post->content !!}
 #e if the content has content = <tag>someTxt</tag>. In that case for correct displaying.
+
+
+
+
+
+Comments 37. Реализуем добавление комментариев в посте. Геттеры в моделях Laravel
+-$data['user_id'] = auth()->user()->id;     $data['post_id'] = $post->id;
+-'prefix'=>'{post}/comments' in posts -> comments namespace
+-comments() { return $this hasMany(); }
+#f in Post model
+-$post->comments->sortByDesc('created_at');
+-user() for Comment model { return $this belongsTo() ;}
+#e user_id is in comments table
+-getDateAsCarbonAttribute() { return Carbon::parse($this->created_at) }
+#0
+#f in Comment model
+#d dont forget to add Carbon::setLocale('ua_UA'); in AppServiceProvider boot() if use this option
+#e when using this attribute miss get* and *Attribute parts: $post->dateAsCarbon // not getDateAsCarbonAttribute
+-change redirectTo for login register logout controllers: $redirectTo = '/posts';
+#d forget to add @auth check before showing login register links
+
+
+
+
+
+Likes 38. Добавление лайков к постам. Бонусом - вывод постов по категориям
+-like icon must be in form in button type = submit
+
+
+

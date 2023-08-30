@@ -23,10 +23,29 @@
             </button>
             <div class="collapse navbar-collapse" id="edicaMainNav">
                 <ul class="navbar-nav mx-auto mt-2 mt-lg-0">
-                    <li class="nav-item">
+                    <li class="nav-item btn btn-success">
                         <a class="nav-link" href="{{ route('main.index') }}">Main</a>
                     </li>
+                    @guest()
+                        <li class="nav-item btn btn-primary mx-3">
+                            <a class="nav-link" href="{{ route('login') }}"> {{ __('Sign in') }}</a>
+                        </li>
+                        <li class="nav-item btn btn-warning">
+                            <a class="nav-link" href="{{ route('register') }}"> {{ __('Sign up') }}</a>
+                        </li>
+                    @endguest
+                    @auth()
+                        <li class="nav-item btn btn-primary mx-3">
+                            <a class="nav-link" href="{{ route('personal.main.index') }}"> Your account </a>
+                        </li>
+                    @endauth
                 </ul>
+                @auth()
+                    <form action="{{ route('logout') }}" class="nav-item btn btn-outline-danger" method="post">
+                        @csrf
+                        <input type="submit" class="btn font-weight-bold" value="Logout">
+                    </form>
+                @endauth
             </div>
         </nav>
     </div>
@@ -34,7 +53,7 @@
 
 @yield('content')
 
-<section class="edica-footer-banner-section">
+<section class="mt-5 edica-footer-banner-section">
     <div class="container">
         <div class="footer-banner" data-aos="fade-up">
             <h1 class="banner-title">Download it now.</h1>
