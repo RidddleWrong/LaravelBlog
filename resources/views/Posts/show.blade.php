@@ -21,6 +21,34 @@
             </section>
             <div class="row">
                 <div class="col-lg-9 mx-auto">
+                    {{--Likes--}}
+                    <section class="d-flex justify-content-between mb-5">
+                        <h2>Likes</h2>
+                        <div>
+                            @auth()
+                                <form action="{{ route('post.like.store', $post->id) }}" method="post"
+                                      class="text-right">
+                                    @csrf
+                                    <span><b>
+                                        {{ $post->userLikes->count() }}
+                                    </b></span>
+                                    <button type="submit" class="border-0 bg-transparent">
+                                        <i class="fa{{ in_array($post->id, auth()->user()->likedPosts()->pluck('post_id')->toArray()) ? 's' : 'r' }} fa-heart fa-lg"></i>
+                                    </button>
+                                </form>
+                            @endauth
+                            @guest()
+                                <div>
+                                    <span><b>
+                                        {{ $post->userLikes->count() }}
+                                    </b></span>
+                                    <i class="fas fa-heart fa-lg"></i>
+                                </div>
+                            @endguest
+                        </div>
+                    </section>
+                    {{--Related posts--}}
+                    @if($relatedPosts->isNotEmpty())
                     <section class="related-posts">
                         <h2 class="section-title mb-4" data-aos="fade-up">Related Posts by Category</h2>
                         <div class="row">
@@ -36,6 +64,8 @@
                             @endforeach
                         </div>
                     </section>
+                    @endif
+                    {{--Creating comment--}}
                     <section class="comment-section">
                         <h2 class="section-title mb-5" data-aos="fade-up">Comments ({{ $post->comments->count() }})</h2>
                         @auth()
@@ -57,6 +87,7 @@
                             </form>
                         @endauth
                     </section>
+                    {{--Comments displaying--}}
                     <section class="mb-5">
                         @foreach($post->comments->sortByDesc('created_at') as $comment)
                             <div class="mb-5">

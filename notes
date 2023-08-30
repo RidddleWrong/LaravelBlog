@@ -48,7 +48,7 @@ $post->tags() код указан в Post модели
 
 $post->tags()->sync($tagIds); если у текущего поста $post айдишники его тегов (которые хранятся в таблице post_tags) не совпадают с айди тегов из $tagIds(то есть с новыми выбранными тегами), то они удаляются, в итоге остаются только теги из $tagIds
 
-$contains in laravel 8 and below $post->tags->pluck('id')->toArray() - метод pluck возвращает колекцию из указанной колонки. Аналог array_column(), только для колекции.
+$contains in laravel 8 and below in_array($tag, $post->tags->pluck('id')->toArray()) - метод pluck возвращает колекцию из указанной колонки. Аналог array_column(), только для колекции.
 
 Storage::disk('public') - аналог asset и подобных. Перебрасывает нас в папку Storage -> app. В скобках указываем папку в которую переходим или создаем.
 
@@ -201,9 +201,26 @@ Comments 34. Структура в бд для комментариев и их 
 
 
 
-Posts main 35. Вывод ленты постов. Случайные посты. Популярные посты. Пагинация
-1 $posts = Post::withCount('likedPosts')->get()->take(#number of rows to take from get());
--create likedPosts() in Post model
+Post::withCount() take() Posts main 35. Вывод ленты постов. Случайные посты. Популярные посты. Пагинация
+1 #f Post model
+create userLikes(){belongsToMany}
+-#f Post IndexController
+-#n
+public function __invoke()
+    {
+        $posts = Post::paginate(6);
+        $randomPosts = Post::get()->random(4);
+        $likedPosts = Post::withCount('userLikes')->orderBy('user_likes_count', 'DESC')->get()->take(4);
+    #e withCount() creates additional column user_likes_count in this case and saves in it count of rows returned by userLikes() in Post model
+        return view('posts.index', compact('posts', 'randomPosts', 'likedPosts'));
+    }
+2 #o
+-#n
+-#f Post model
+protected $withCount = ['userLikes']; //name of model method
+#e creates user_likes_count field for Post model in general
+so that u wont need to do Post::withCount() every time and
+can use this field in every file with Post model objects
 
 
 
@@ -250,8 +267,42 @@ Comments 37. Реализуем добавление комментариев в
 
 
 
-Likes 38. Добавление лайков к постам. Бонусом - вывод постов по категориям
--like icon must be in form in button type = submit
-
+toggle(), back() Likes 38. Добавление лайков к постам. Бонусом - вывод постов по категориям
+-#f posts index blade php
+<div class="d-flex justify-content-between">
+     <p class="blog-post-category">{{ $post->category->title }}</p>
+     <form action="{{ route('post.like.store', $post->id) }}">
+         <button type="submit" class="border-0 bg-transparent">
+#v1
+             @if(in_array($post->id, auth()->user()->likedPosts()->pluck('post_id')->toArray()))
+                 <i class="fas fa-heart"></i>
+             @else
+                 <i class="far fa-heart"></i>
+             @endif
+#v2
+             <i class="fa{{ in_array($post->id, auth()->user()->likedPosts()->pluck('post_id')->toArray()) ? 'r' : 's' }} fa-heart">
+#
+         </button>
+     </form>
+ </div>
+@guest()
+    <div>
+        <i class="far fa-heart"></i>
+    </div>
+@endguest
+-#f posts show blade php
+<section>
+    <div class="text-right">
+        ({{ $post->post_user_likes->count() }})<i class="fas fa-heart fa-lg"></i>
+    </div>
+</section>
+-#f Post Like StoreController
+public function __invoke(Post $post)
+    {
+        Auth::user()->likedPosts()->toggle($post->id);
+#n toggle() if this post not liked by this user then make it liked, otherwise delete like
+        return redirect()->back();
+    }
+#n redirect()->back(); back to page we came from to here
 
 
