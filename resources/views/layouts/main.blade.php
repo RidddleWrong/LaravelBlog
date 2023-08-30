@@ -26,6 +26,9 @@
                     <li class="nav-item btn btn-success">
                         <a class="nav-link" href="{{ route('main.index') }}">Main</a>
                     </li>
+{{--                    <li class="nav-item btn btn-success">--}}
+{{--                        <a class="nav-link" href="{{ route('category.index') }}">Categories</a>--}}
+{{--                    </li>--}}
                     @guest()
                         <li class="nav-item btn btn-primary mx-3">
                             <a class="nav-link" href="{{ route('login') }}"> {{ __('Sign in') }}</a>

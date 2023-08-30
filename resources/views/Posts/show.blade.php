@@ -29,18 +29,18 @@
                                 <form action="{{ route('post.like.store', $post->id) }}" method="post"
                                       class="text-right">
                                     @csrf
-                                    <span><b>
-                                        {{ $post->userLikes->count() }}
-                                    </b></span>
+
                                     <button type="submit" class="border-0 bg-transparent">
-                                        <i class="fa{{ in_array($post->id, auth()->user()->likedPosts()->pluck('post_id')->toArray()) ? 's' : 'r' }} fa-heart fa-lg"></i>
-                                    </button>
+                                        <i class="fa{{ in_array($post->id, auth()->user()->likedPosts()->pluck('id')->toArray()) ? 's' : 'r' }} fa-heart fa-lg"></i>
+                                    </button><span><b>
+                                        {{ $post->user_likes_count }}
+                                    </b></span>
                                 </form>
                             @endauth
                             @guest()
                                 <div>
                                     <span><b>
-                                        {{ $post->userLikes->count() }}
+                                        {{ $post->user_likes_count }}
                                     </b></span>
                                     <i class="fas fa-heart fa-lg"></i>
                                 </div>

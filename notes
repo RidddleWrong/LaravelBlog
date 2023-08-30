@@ -201,7 +201,7 @@ Comments 34. Структура в бд для комментариев и их 
 
 
 
-Post::withCount() take() Posts main 35. Вывод ленты постов. Случайные посты. Популярные посты. Пагинация
+$withCount Post::withCount() take() Posts main 35. Вывод ленты постов. Случайные посты. Популярные посты. Пагинация
 1 #f Post model
 create userLikes(){belongsToMany}
 -#f Post IndexController
@@ -214,13 +214,26 @@ public function __invoke()
     #e withCount() creates additional column user_likes_count in this case and saves in it count of rows returned by userLikes() in Post model
         return view('posts.index', compact('posts', 'randomPosts', 'likedPosts'));
     }
-2 #o
+2 #f Post model
 -#n
--#f Post model
+-#o
 protected $withCount = ['userLikes']; //name of model method
 #e creates user_likes_count field for Post model in general
 so that u wont need to do Post::withCount() every time and
 can use this field in every file with Post model objects
+#d if add this property in this model no matter the method put in it no matter if tis property even no used then u will need to use
+-#v1
+    <i class="fa{{ in_array($post->id, auth()->user()->likedPosts()->pluck('id')->toArray()) ? 's' : 'r' }} fa-heart fa-lg"></i>
+-#e instead of pluck(post_id) - pluck(id)
+because u r referring to id of taken posts with the method
+-#v2
+    or pluck('pivot.post_id)'
+-#v3
+    or select('post_id')->pluck('post_id)'
+-#v4
+    or add select->('post_id', 'user_id'); in User model in likedPosts() in the end
+
+
 
 
 
@@ -247,15 +260,22 @@ in posts.show 6 row
 
 
 
+
+
 Comments 37. Реализуем добавление комментариев в посте. Геттеры в моделях Laravel
+1 #f Store controller in Post Comment
 -$data['user_id'] = auth()->user()->id;     $data['post_id'] = $post->id;
--'prefix'=>'{post}/comments' in posts -> comments namespace
+2 #f in web php
+-'prefix'=>'{post}/comments'  posts -> comments namespace
+2 #f in Post model
 -comments() { return $this hasMany(); }
-#f in Post model
+3 $f in posts show
 -$post->comments->sortByDesc('created_at');
--user() for Comment model { return $this belongsTo() ;}
+4 #f for Comment model
+-user()  { return $this belongsTo() ;}
 #e user_id is in comments table
--getDateAsCarbonAttribute() { return Carbon::parse($this->created_at) }
+#0
+5 getDateAsCarbonAttribute() { return Carbon::parse($this->created_at) }
 #0
 #f in Comment model
 #d dont forget to add Carbon::setLocale('ua_UA'); in AppServiceProvider boot() if use this option
@@ -268,20 +288,20 @@ Comments 37. Реализуем добавление комментариев в
 
 
 toggle(), back() Likes 38. Добавление лайков к постам. Бонусом - вывод постов по категориям
--#f posts index blade php
+1#f posts index blade php
 <div class="d-flex justify-content-between">
      <p class="blog-post-category">{{ $post->category->title }}</p>
      <form action="{{ route('post.like.store', $post->id) }}">
          <button type="submit" class="border-0 bg-transparent">
-#v1
+-#v1
              @if(in_array($post->id, auth()->user()->likedPosts()->pluck('post_id')->toArray()))
                  <i class="fas fa-heart"></i>
              @else
                  <i class="far fa-heart"></i>
              @endif
-#v2
+-#v2
              <i class="fa{{ in_array($post->id, auth()->user()->likedPosts()->pluck('post_id')->toArray()) ? 'r' : 's' }} fa-heart">
-#
+-#
          </button>
      </form>
  </div>

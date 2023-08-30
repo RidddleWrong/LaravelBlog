@@ -22,7 +22,7 @@
                                             {{ $post->user_likes_count }}
                                         </b></span>
                                         <button type="submit" class="border-0 bg-transparent">
-                                            <i class="fa{{ in_array($post->id, auth()->user()->likedPosts()->pluck('post_id')->toArray()) ? 's' : 'r' }} fa-heart"></i>
+                                            <i class="fa{{ in_array($post->id, auth()->user()->likedPosts()->pluck('id')->toArray()) ? 's' : 'r' }} fa-heart"></i>
                                         </button>
                                     </form>
                                 @endauth
@@ -66,7 +66,7 @@
                                             <form action="{{ route('post.like.store', $post->id) }}" method="post">
                                                 @csrf
                                                 <button type="submit" class="border-0 bg-transparent">
-                                                    <i class="fa{{ in_array($post->id, auth()->user()->likedPosts()->pluck('post_id')->toArray()) ? 's' : 'r' }} fa-heart"></i>
+                                                    <i class="fa{{ in_array($post->id, auth()->user()->likedPosts()->pluck('id')->toArray()) ? 's' : 'r' }} fa-heart"></i>
                                                 </button>
                                             </form>
                                         @endauth

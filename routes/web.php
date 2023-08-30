@@ -20,6 +20,9 @@ Route::group(['namespace' => 'App\Http\Controllers\Post', 'prefix'=>'posts'], fu
         Route::post('/', 'StoreController')->name('post.like.store');
     });
 });
+//Route::group(['namespace' => 'App\Http\Controllers\Category'], function () {
+//    Route::get('/', 'IndexController')->name('category.index');
+//});
 Route::group(['namespace' => 'App\Http\Controllers\Personal', 'prefix' => 'personal', 'middleware' => ['auth', 'verified']], function () {
     Route::group(['namespace' => 'Main', 'prefix'=>'main'], function () {
         Route::get('/', 'IndexController')->name('personal.main.index');
