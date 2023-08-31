@@ -326,3 +326,13 @@ public function __invoke(Post $post)
 #n redirect()->back(); back to page we came from to here
 
 
+
+
+40. Telescope, $with
+1 protected $with = [<method-name>]
+#e adds to $posts = Post::get(); with(<method-name>) so that when u get all posts from DB
+u also do <method-name>() for all posts with one DB query instead of doing <method-name>()
+for every $post alone
+2 $User = User::has('posts')->where(...);
+#e will get u all users that has relation with posts() that u made in User model
+and then looks in these users for where clause.

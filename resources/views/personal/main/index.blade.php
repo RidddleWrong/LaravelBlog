@@ -27,7 +27,7 @@
                     <!-- small box -->
                     <div class="small-box bg-danger">
                         <div class="inner">
-                            <h3>1</h3>
+                            <h3>{{ auth()->user()->likedPosts->count() }}</h3>
 
                             <p>Liked</p>
                         </div>
@@ -42,7 +42,7 @@
                     <!-- small box -->
                     <div class="small-box bg-info">
                         <div class="inner">
-                            <h3>1</h3>
+                            <h3>{{ auth()->user()->comments->count() }}</h3>
 
                             <p>Comments</p>
                         </div>

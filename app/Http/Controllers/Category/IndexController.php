@@ -9,8 +9,7 @@ class IndexController extends Controller
 {
     public function __invoke()
     {
-        dd(1);
         $categories = Category::all();
-        return view('main.index', compact('categories'));
+        return view('categories.index', compact('categories'));
     }
 }

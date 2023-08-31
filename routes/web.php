@@ -6,8 +6,7 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes(['verify' => true]);//verify true sends the verify link to user that registered himself
 
-Route::group(['namespace' => 'App\Http\Controllers\Post'], function () {
-    Route::get('/', 'IndexController')->name('post.index');
+Route::group(['namespace' => 'App\Http\Controllers\Main'], function () {
     Route::get('/', 'IndexController')->name('main.index');
 });
 Route::group(['namespace' => 'App\Http\Controllers\Post', 'prefix'=>'posts'], function () {
@@ -20,9 +19,12 @@ Route::group(['namespace' => 'App\Http\Controllers\Post', 'prefix'=>'posts'], fu
         Route::post('/', 'StoreController')->name('post.like.store');
     });
 });
-//Route::group(['namespace' => 'App\Http\Controllers\Category'], function () {
-//    Route::get('/', 'IndexController')->name('category.index');
-//});
+Route::group(['namespace' => 'App\Http\Controllers\Category', 'prefix' => 'categories'], function () {
+    Route::get('/', 'IndexController')->name('category.index');
+    Route::group(['namespace' => 'Post', 'prefix'=>'{category}/posts'], function () {
+        Route::get('/', 'ShowController')->name('category.post.show');
+    });
+});
 Route::group(['namespace' => 'App\Http\Controllers\Personal', 'prefix' => 'personal', 'middleware' => ['auth', 'verified']], function () {
     Route::group(['namespace' => 'Main', 'prefix'=>'main'], function () {
         Route::get('/', 'IndexController')->name('personal.main.index');

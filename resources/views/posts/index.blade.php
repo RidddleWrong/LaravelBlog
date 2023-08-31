@@ -3,7 +3,7 @@
 @section('content')
     <main class="blog">
         <div class="container">
-            <h1 class="edica-page-title" data-aos="fade-up">This Blog</h1>
+            <h1 class="edica-page-title" data-aos="fade-up">The Blogs</h1>
             <section class="featured-posts-section">
                 <div class="row">
                     @foreach($posts as $post)
@@ -49,6 +49,7 @@
                     </div>
                 </div>
             </section>
+            {{--Random posts--}}
             <div class="row">
                 <div class="col-md-8">
                     <section>
@@ -65,6 +66,9 @@
                                         @auth()
                                             <form action="{{ route('post.like.store', $post->id) }}" method="post">
                                                 @csrf
+                                                <span><b>
+                                                    {{ $post->user_likes_count }}
+                                                </b></span>
                                                 <button type="submit" class="border-0 bg-transparent">
                                                     <i class="fa{{ in_array($post->id, auth()->user()->likedPosts()->pluck('id')->toArray()) ? 's' : 'r' }} fa-heart"></i>
                                                 </button>
@@ -84,8 +88,9 @@
                         </div>
                     </section>
                 </div>
+                {{--Top posts--}}
                 <div class="widget widget-post-list">
-                    <h5 class="widget-title">Top posts</h5>
+                    <h5 class="widget-title" style="font-size: 30px">Top posts</h5>
                     <ul class="post-list">
                         @foreach($likedPosts as $post)
                             <li class="post">
