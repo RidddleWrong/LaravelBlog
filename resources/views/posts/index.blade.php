@@ -3,7 +3,16 @@
 @section('content')
     <main class="blog">
         <div class="container">
-            <h1 class="edica-page-title" data-aos="fade-up">The Blogs</h1>
+
+            @if(isset($_GET['search']))
+                @if(count($posts) > 0)
+                    <h3 class="edica-page-title" data-aos="fade-up">Search results:</h3>
+                @else
+                    <h3 class="edica-page-title" data-aos="fade-up">Nothing found:</h3>
+                @endif
+            @else
+                <h3 class="edica-page-title" data-aos="fade-up">The blogs</h3>
+            @endif
             <section class="featured-posts-section">
                 <div class="row">
                     @foreach($posts as $post)
@@ -45,11 +54,12 @@
                 </div>
                 <div class="row mb-5">
                     <div class="mx-auto" style="margin-top: -80px">
-                        {{ $posts->links() }}
+                        {{ $posts->withQueryString()->links() }}
                     </div>
                 </div>
             </section>
             {{--Random posts--}}
+            <h2 class="edica-page-title text-center" data-aos="fade-up">Maybe you would like</h2>
             <div class="row">
                 <div class="col-md-8">
                     <section>

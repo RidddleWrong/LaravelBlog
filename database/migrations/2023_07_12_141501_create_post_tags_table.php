@@ -28,8 +28,6 @@ return new class extends Migration
             //FK
             $table->foreign('post_id', 'post_tag_post_fk')->on('posts')->references('id');
             $table->foreign('tag_id', 'post_tag_tag_fk')->on('tags')->references('id');
-
-
         });
     }
 
@@ -40,6 +38,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('post_tags');
+        if (app()->isLocal()) {
+            Schema::dropIfExists('post_tags');
+        }
     }
 };

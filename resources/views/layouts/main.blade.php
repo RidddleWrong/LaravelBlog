@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="{{ asset('assets/vendors/font-awesome/css/all.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/vendors/aos/aos.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+    <link rel="shotrcut icon" href="{{ asset('assets/images/logo.svg') }}">
     <script src="{{ asset('assets/vendors/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('assets/js/loader.js') }}"></script>
 </head>
@@ -16,24 +17,40 @@
 <header class="edica-header">
     <div class="container">
         <nav class="navbar navbar-expand-lg navbar-light">
-            <a class="navbar-brand" href="index.html"><img src="{{ asset('assets/images/logo.svg') }}" alt="Edica"></a>
+            {{--            <a class="navbar-brand" href="/"><img src="{{ asset('assets/images/logo.svg') }}" alt="Edica"></a>--}}
             <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#edicaMainNav"
                     aria-controls="collapsibleNavId" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="edicaMainNav">
                 <ul class="navbar-nav mr-auto mt-2 mt-lg-0 ">
-                    <li class="nav-item btn btn-outline-success mr-3">
+                    <li class="btn btn-outline-success mr-3">
                         <a class="nav-link" href="{{ route('post.index') }}">Main</a>
                     </li>
-                    <li class="nav-item btn btn-outline-success mr-3">
+                    <li class="btn btn-outline-success mr-3">
                         <a class="nav-link" href="{{ route('category.index') }}">Categories</a>
                     </li>
-
+                </ul>
+                <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                    <li>
+                        <form class="d-flex" action="{{ route('post.index') }}" method="get">
+                            <input type="text" name="search" class=" border-secondary rounded" placeholder="Search"
+                                   aria-label="Search" aria-describedby="basic-addon2">
+                            <select name="category_id" class="form-select border-secondary
+                            rounded" style="color: grey;">
+                                @foreach($categories as $category)
+                                    <option value="{{ $category->id }}" {{ $category->id == old('category_id') ? ' selected' : ''}}>{{ $category->title }}</option>
+                                @endforeach
+                            </select>
+                            <button class="btn btn-outline-secondary rounded" type="submit">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </form>
+                    </li>
                 </ul>
                 <ul class="navbar-nav mt-2 mt-lg-0">
                     @auth()
-                        <li class="nav-item mr-3 btn btn-outline-primary mr-3">
+                        <li class="mr-3 btn btn-outline-primary mr-3">
                             <a class="nav-link" href="{{ route('personal.main.index') }}">Personal</a>
                         </li>
                         <form action="{{ route('logout') }}" class="nav-item btn btn-outline-danger" method="post">
@@ -42,10 +59,10 @@
                         </form>
                     @endauth
                     @guest()
-                        <li class="nav-item mr-3 btn btn-primary">
+                        <li class="mr-3 btn btn-primary">
                             <a class="nav-link" href="{{ route('login') }}"> {{ __('Sign in') }}</a>
                         </li>
-                        <li class="nav-item btn btn-warning">
+                        <li class="btn btn-warning">
                             <a class="nav-link" href="{{ route('register') }}"> {{ __('Sign up') }}</a>
                         </li>
                     @endguest

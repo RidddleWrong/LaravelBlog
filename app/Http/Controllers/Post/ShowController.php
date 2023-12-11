@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Post;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Post;
 use App\Models\User;
 
@@ -16,6 +17,8 @@ class ShowController extends Controller
             ->where('id', '!=', $post->id)
             ->get()
             ->take(3);
-        return view('posts.show', compact('post', 'relatedPosts'));
+        $categories = Category::all();
+
+        return view('posts.show', compact('post', 'relatedPosts', 'categories'));
     }
 }
