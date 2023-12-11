@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->unsignedSmallInteger('role')->default(0);
+            $table->unsignedSmallInteger('role')->default(1)->comment('0 - Admin, 1 - User');
         });
     }
 

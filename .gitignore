@@ -1,3 +1,4 @@
+/AdminLTE-3.2.0/
 /node_modules
 /public/hot
 /public/storage
@@ -14,3 +15,4 @@ yarn-error.log
 notes
 /.idea
 /.vscode
+

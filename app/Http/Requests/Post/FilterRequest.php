@@ -24,7 +24,8 @@ class FilterRequest extends FormRequest
     public function rules()
     {
         return [
-            'search'=>'nullable|string'
+            'search'=>'nullable|string',
+            'category_id'=>'nullable|int'
         ];
     }
 }
