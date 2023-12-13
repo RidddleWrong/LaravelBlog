@@ -1,8 +1,8 @@
 /node_modules
 /edica
-#/public/hot
-#/public/storage Commented for dev
-#/storage/*.key
+/public/hot
+/public/storage
+/storage/*.key
 /vendor
 .env
 .env.backup
