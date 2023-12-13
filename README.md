@@ -1,64 +1,112 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# LaravelBlog проект (eng ver below)
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Ласкаво просимо до проекту LaravelBlog. Цей README містить необхідну інформацію для комфортної роботи з проектом. Дотримуйтеся цих кроків для початку:
 
-## About Laravel
+## Початкове налаштування
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+1. Після клонування проекту виконайте наступні команди:
+   ```bash
+   npm install
+   composer install
+   composer update
+    ```
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+2. Використовуйте файл `.env.example`, щоб створити файл `.env`. Вкажіть назву бази даних, з якою ви плануєте працювати. Потім виконайте:
+    ```bash
+    php artisan key:generate # Генерує APP_KEY в .env
+    ```
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Ініціалізація бази даних
 
-## Learning Laravel
+3. Оберіть один з варіантів:
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+    - **Варіант 1: Імпорт SQL-файлу**
+        - Імпортуйте `LaravelBlog.sql` (знаходиться в кореневому каталозі) до вашої бази даних. Назвіть базу даних відповідно (зверніть увагу на назву для файлу `.env`).
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+    - **Варіант 2: Використання функціоналу фабрики**
+        - Запустіть наступну команду для створення таблиць і заповнення бази даних:
+            ```
+            php artisan migrate --seed
+            ```
+        - В цьому варіанті генеруються випадкові зображення за допомогою `PostFactory`, уникнувши необхідності налаштовувати їх вручну.
 
-## Laravel Sponsors
+## Створення символічного посилання на сховище
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+4. Створіть символічне посилання `public/storage`:
+    ```
+    php artisan storage:link
+    ```
+   Це дозволить нам використовувати зображення за допомогою методу `asset()` з папки public.
 
-### Premium Partners
+## Доступ до панелі адміністратора
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+5. Для доступу до панелі адміністратора:
 
-## Contributing
+    - **Варіант 1: Якщо в пункті 3 ви використали LaravelBlog.sql опцію**
+        - Увійдіть з наступними обліковими даними:
+            - Електронна пошта: admin@admin.com
+            - Пароль: 1 (для всіх користувачів)
+        - На головній сторінці блогу натисніть кнопку "personal" у правому верхньому куті, перейдіть у свій обліковий запис і натисніть кнопку "Панель адміністратора" в лівому боці.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+    - **Варіант 2: Якщо в пункті 3 ви використали опцію фабрик**
+        - Створіть або відредагуйте існуючого користувача, встановіть роль з 1 (користувач) на 0 (адміністратор), і якщо потрібно змініть імеїл.
+        - Виконайте кроки з Варіанту 1, замінюючи електронну адресу на свою відредаговану версію.
 
-## Code of Conduct
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
 
-## Security Vulnerabilities
+# LaravelBlog Project
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Welcome to the LaravelBlog project. This README provides essential information for a seamless experience with the project. Please follow these steps to get started:
 
-## License
+## Initial Setup
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+1. After pulling the project, run the following commands:
+    ```bash
+    npm install
+    composer install
+    composer update
+    ```
+
+2. Use the `.env.example` file to create a `.env` file. Specify the database name you intend to use. Then run:
+    ```bash
+    php artisan key:generate # Generates APP_KEY in .env
+    ```
+
+## Database Initialization
+
+3. Choose one of the following options:
+
+    - **Option 1: Import SQL File**
+        - Import `LaravelBlog.sql` (found in the root directory) into your database. Name your database accordingly and note the name in the `.env` file.
+
+    - **Option 2: Use Factory Functionality**
+        - Run the following command to create tables and seed the database:
+            ```bash
+            php artisan migrate --seed
+            ```
+        - This option generates random images using the `PostFactory`, eliminating the need to set them manually.
+
+## Storage Link
+
+4. Create a symbolic link `public/storage`:
+    ```bash
+    php artisan storage:link
+    ```
+   This enables possibility of using images with the `asset()` method from the public folder.
+
+## Admin Panel Access
+
+5. To access the Admin Panel:
+
+    - **Option 1: If you chose the LaravelBlog.sql option in step 3**
+        - Login with the following credentials:
+            - Email: admin@admin.com
+            - Password: 1 (for all users)
+        - On the main blog page, click the "Personal" button in the top-right, navigate to your account, and click the Admin Panel button in the left sidebar.
+
+    - **Option 2: If you chose the factory option in step 3**
+        - Create or edit an existing user, set the role value to 0(admin), and change the email if needed.
+        - Follow the steps from Option 1, replacing the email with your adjusted version.
+
+
+
