@@ -11,6 +11,5 @@ trait Filterable
     {
         $filter->apply($builder);
         return $builder;
-
     }
 }

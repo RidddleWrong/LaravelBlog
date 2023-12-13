@@ -1,8 +1,8 @@
 /node_modules
 /edica
-/public/hot
-#/public/storage Commented only for dev motives
-/storage/*.key
+#/public/hot
+#/public/storage Commented for dev
+#/storage/*.key
 /vendor
 .env
 .env.backup
@@ -14,5 +14,5 @@ npm-debug.log
 yarn-error.log
 /.idea
 /.vscode
-LaravelBlog.sql
+#LaravelBlog.sql
 
