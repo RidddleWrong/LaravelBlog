@@ -29,6 +29,7 @@
                         @csrf
                         @method('patch')
                         <div class="form-group">
+                            <label class="custom-label">Category name</label>
                             <input type="text" class="form-control" name="title" placeholder="Category name" value="{{ $category->title }}" required>
                         </div>
                         <input type="submit" class="btn btn-primary" value="Update">

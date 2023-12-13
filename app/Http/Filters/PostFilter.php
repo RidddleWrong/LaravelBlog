@@ -22,8 +22,10 @@ class PostFilter extends AbstractFilter
 
     public function search(Builder $builder, $value)
     {
-        $builder->where('title', 'like', "%$value%")
-            ->orWhere('content', 'like', "%$value%");
+        $builder->where(function ($query) use ($value) {
+            $query->where('title', 'like', "%$value%")
+                ->orWhere('content', 'like', "%$value%");
+        });
     }
 
     public function categoryId(Builder $builder, $value)

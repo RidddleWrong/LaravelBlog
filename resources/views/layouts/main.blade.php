@@ -34,14 +34,15 @@
                 <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                     <li>
                         <form class="d-flex" action="{{ route('post.index') }}" method="get">
-                            <input type="text" name="search" class=" border-secondary rounded" placeholder="Search"
-                                   aria-label="Search" aria-describedby="basic-addon2">
                             <select name="category_id" class="form-select border-secondary
                             rounded" style="color: grey;">
+                                <option value="0" selected>All categories</option>
                                 @foreach($categories as $category)
-                                    <option value="{{ $category->id }}" {{ $category->id == old('category_id') ? ' selected' : ''}}>{{ $category->title }}</option>
+                                    <option value="{{ $category->id }}" {{ isset($_GET['category_id']) && $_GET['category_id'] == $category->id ? ' selected' : '' }}>{{ $category->title }}</option>
                                 @endforeach
                             </select>
+                            <input type="text" name="search" @if(isset($_GET['search'])) value="{{$_GET['search']}}" @endif class="border-secondary rounded" placeholder="Search"
+                                   aria-label="Search" aria-describedby="basic-addon2">
                             <button class="btn btn-outline-secondary rounded" type="submit">
                                 <i class="fas fa-search"></i>
                             </button>
@@ -95,7 +96,7 @@
     <div class="container">
         <div class="row footer-widget-area">
             <div class="col-md-3">
-                <a href="index.html" class="footer-brand-wrapper">
+                <a href="#" class="footer-brand-wrapper">
                     <img src="{{ asset('assets/images/logo.svg') }}" alt="edica logo">
                 </a>
                 <p class="contact-details">hello@edica.com</p>

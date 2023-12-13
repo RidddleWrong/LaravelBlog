@@ -29,11 +29,12 @@
                           enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
-                            <input type="text" class="form-control w-25" name="title" placeholder="Post name"
-                                   value="{{ old('title') }}">
+                            <label class="custom-label">Title</label>
+                            <input type="text" class="form-control w-25" name="title" placeholder="Post title" value="{{ old('title') }}">
                         </div>
 
                         <div class="from-group">
+                            <label class="custom-label">Content</label>
                             <textarea id="summernote" name="content">{{ old('content') }}</textarea>
                         </div>
 
@@ -55,8 +56,7 @@
                             <label for="exampleInputFile">Add main image</label>
                             <div class="input-group">
                                 <div class="custom-file">
-                                    <input type="file" name="main_image" class="custom-file-input"
-                                           id="exampleInputFile">
+                                    <input type="file" name="main_image" class="custom-file-input" id="exampleInputFile">
                                     <label class="custom-file-label" for="exampleInputFile">Choose image</label>
                                 </div>
                                 <div class="input-group-append">
@@ -68,6 +68,7 @@
                         <div class="form-group w-25 ">
                             <label>Select category</label>
                             <select name="category_id" class="form-control">
+                                <option value="null" selected disabled>Select category</option>
                                 @foreach($categories as $category)
                                     <option value="{{ $category->id }}" {{ $category->id == old('category_id') ? ' selected' : ''}}>{{ $category->title }}</option>
                                 @endforeach

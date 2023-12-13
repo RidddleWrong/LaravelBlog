@@ -11,6 +11,22 @@
                 </a>
             </li>
             <li class="nav-item">
+                <a href="/" class="nav-link">
+                    <i class="nav-icon fas fa-book"></i>
+                    <p>
+                        Blog
+                    </p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{route('personal.main.index')}}" class="nav-link">
+                    <i class="nav-icon fas fa-user"></i>
+                    <p>
+                        Personal
+                    </p>
+                </a>
+            </li>
+            <li class="nav-item">
                 <a href="{{ route('admin.user.index') }}" class="nav-link">
                     <i class="nav-icon fas fa-users"></i>
                     <p>

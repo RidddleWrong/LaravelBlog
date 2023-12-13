@@ -5,6 +5,7 @@ namespace Database\Factories;
 use App\Models\Category;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\File;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Post>
@@ -18,13 +19,15 @@ class PostFactory extends Factory
      */
     public function definition()
     {
+        $imageFiles = File::allFiles(public_path('storage/images'));
+        $randomImageName = $this->faker->randomElement($imageFiles)->getFilename();
         return [
             'title' => fake()->sentence(random_int(1, 3)),
-            'content' => '<p><i>'.fake()->text(1000).'</p></i>',//simulating creating with post form and using form features
+            'content' => '<p><i>'.fake()->text(5000).'</p></i>',// tags <p><i> for simulating creating post using form features
             'author_id' => User::pluck('id')->random(),
             'category_id' => Category::pluck('id')->random(),
-            'preview_image' => $this->faker->imageUrl,
-            'main_image' => $this->faker->imageUrl,
+            'preview_image' => 'images/'.$this->faker->randomElement($imageFiles)->getFilename(),
+            'main_image' => 'images/'.$this->faker->randomElement($imageFiles)->getFilename(),
         ];
     }
 }

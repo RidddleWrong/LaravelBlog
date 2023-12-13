@@ -28,6 +28,7 @@
                     <form action="{{ route('admin.tag.store') }}" method="POST" class="w-25">
                         @csrf
                         <div class="form-group">
+                            <label class="custom-label">Tag name</label>
                             <input type="text" class="form-control" name="title" placeholder="Tag name" required>
                         </div>
                         <input type="submit" class="btn btn-primary" value="Add">

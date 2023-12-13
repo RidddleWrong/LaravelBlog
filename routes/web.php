@@ -3,7 +3,6 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-
 Auth::routes(['verify' => true]);//verify true sends the verify link to user that registered himself
 
 Route::get('/', function () {
@@ -65,8 +64,8 @@ Route::group(['namespace' => 'App\Http\Controllers\Admin', 'prefix' => 'admin', 
     });
 
     Route::group(['namespace' => 'Category', 'prefix' => 'categories'], function () {
-        // так как тут используется неймспейс то и система тут другая. Когда мы прописываем тут нейм для рута, то эти неймы тут ищут совпадения с другими файлами ( в нашем случае с sidebar.blade.php )
-        // и когда находит его, то в этом файле с одним из рутов тут, то автоматечески вместо этого рута, в ссылку, где он стоит, подставляется определенное имя состоящее из префиксов неймспейсов, в котором состоит данный рут. В нашем случае рут находится внутри неймспейсов admin and category и у них префиксы admin and categories. Между ними будут стоять слешы в самой ссылке
+        // Коли ми даємо нейми в цьому неймспейсі, то ці рути шукають де до них звертаються в коді (в нашому разі sidebar.blade.php )
+        // І якщо знаходять використання якогось нейму, то його відображення в якості url буде результатом складання всіх префіксів в группах яких знаходиться данний рут. У нашому випадку рут знаходиться всередині неймспейсів admin and category і мають префікси admin and categories. Між ними стоятимуть слєші у самій ссилці: admin/categories
         Route::get('/', 'IndexController')->name('admin.category.index');
         Route::get('/create', 'CreateController')->name('admin.category.create');
         Route::post('/', 'StoreController')->name('admin.category.store');

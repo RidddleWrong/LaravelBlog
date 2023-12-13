@@ -30,18 +30,20 @@
                         @csrf
                         @method('PATCH')
                         <div class="form-group">
-                            <input type="text" class="form-control w-25" name="title" placeholder="Post name"
+                            <label class="custom-label">Title</label>
+                            <input type="text" class="form-control w-25" name="title" placeholder="Post title"
                                    value="{{ old('title', $post->title) }}">
                         </div>
-{{--                        --}}
+
                         <div class="from-group">
+                            <label class="custom-label">Content</label>
                             <textarea id="summernote" name="content">{{ old('content', $post->content) }}</textarea>
                         </div>
-{{--                        --}}
+
                         <div class="form-group w-50">
                             <label for="exampleInputFile">Add preview</label>
                             <div class="image mb-2">
-                                <img src="{{ url('storage/' , $post->preview_image) }}" alt="preview_image" class="w-25">
+                                <img src="{{ asset('storage/'.$post->preview_image) }}" alt="preview_image" class="w-25">
                             </div>
                             <div class="input-group">
                                 <div class="custom-file">
@@ -93,7 +95,7 @@
                             </select>
                         </div>
 {{--                        --}}
-                        <div class="from-group">
+                        <div class="from-group mb-3">
                             <input type="submit" class="btn btn-primary" value="Update">
                         </div>
                     </form>

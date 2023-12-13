@@ -9,7 +9,7 @@
                         <div class="col-md-4 fetured-post blog-post" data-aos="fade-up">
                             <div class="blog-post-thumbnail-wrapper">
                                 <img
-                                    src="{{ $post->preview_image ? asset('/storage/'.$post->preview_image) : asset('/assets/images/blog_7.jpg') }}"
+                                    src="{{ $post->preview_image ? asset('/storage/'.$post->preview_image) : asset('/storage/images/aNoPhoto.png') }}"
                                     alt="blog post">
                             </div>
                             <div class="d-flex justify-content-between">

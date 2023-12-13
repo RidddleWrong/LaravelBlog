@@ -1,7 +1,7 @@
-/AdminLTE-3.2.0/
 /node_modules
+/edica
 /public/hot
-/public/storage
+#/public/storage Commented only for dev motives
 /storage/*.key
 /vendor
 .env
@@ -12,7 +12,7 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
-notes
 /.idea
 /.vscode
+LaravelBlog.sql
 

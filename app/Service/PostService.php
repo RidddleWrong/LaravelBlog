@@ -12,12 +12,13 @@ class PostService
     {
         try {
             DB::beginTransaction();
+            $data['author_id'] = auth()->user()->id;
             if (isset($data['tag_ids'])) {
                 $tagIds = $data['tag_ids'];
                 unset($data['tag_ids']);
             }
             if (isset($data['preview_image'])) {
-                $data['preview_image'] = Storage::disk('public')->put('/images', $data['preview_image']);
+                $data['preview_image'] = Storage::disk('public')->put('/images', $data['preview_image']);// u can just remove / from /images
             }
             if (isset($data['main_image'])) {
                 $data['main_image'] = Storage::disk('public')->put('/images', $data['main_image']);
@@ -44,13 +45,13 @@ class PostService
             if (isset($data['preview_image'])) {
                 $data['preview_image'] = Storage::disk('public')->put('/images', $data['preview_image']);
                 if ($post->preview_image) {
-                    Storage::disk('public')->delete($post->preview_image);
+                    Storage::delete('public/images/'.$post->preview_image);
                 }
             }
             if (isset($data['main_image'])) {
                 $data['main_image'] = Storage::disk('public')->put('/images', $data['main_image']);
                 if ($post->main_image) {
-                    Storage::disk('public')->delete($post->main_image);
+                    Storage::delete('public/images/'.$post->main_image);
                 }
             }
             $post->update($data);
