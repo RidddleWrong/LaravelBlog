@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
         Category::factory(3)->create();
         $posts = Post::factory(30)->create();
         $tags = Tag::factory(6)->create();
-        Comment::factory(20)->create();
+        Comment::factory(150)->create();
         foreach ($users as $user) {
             $user->likedPosts()->sync($posts->pluck('id')->random(15));
         }

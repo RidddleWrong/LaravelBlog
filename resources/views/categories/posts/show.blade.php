@@ -9,7 +9,7 @@
                         <div class="col-md-4 fetured-post blog-post" data-aos="fade-up">
                             <div class="blog-post-thumbnail-wrapper">
                                 <a href="{{ route('post.show', $post->id) }}" class="blog-post-permalink">
-                                    <img src="{{ $post->preview_image ? asset('/storage/'.$post->preview_image) : asset('/storage/images/aNoPhoto.png') }}" alt="blog post">
+                                    <img src="{{ $post->preview_image ? asset('/storage/'.$post->preview_image) : asset('/storage/aNoPhoto.png') }}" alt="blog post">
                                 </a>
                             </div>
                             <div class="d-flex justify-content-between">
@@ -48,7 +48,6 @@
                     </div>
                 </div>
             </section>
-        </div>
         </div>
     </main>
 @endsection

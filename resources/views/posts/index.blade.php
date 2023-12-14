@@ -18,7 +18,9 @@
                         <div class="col-md-4 fetured-post blog-post">
                             <div class="blog-post-thumbnail-wrapper">
                                 <a href="{{ route('post.show', $post->id) }}" class="blog-post-permalink">
-                                    <img src="{{ $post->preview_image ? asset('/storage/'.$post->preview_image) : asset('/storage/images/aNoPhoto.png') }}" alt="blog post">
+                                    <img
+                                        src="{{ $post->preview_image ? asset('/storage/'.$post->preview_image) : asset('/storage/aNoPhoto.png') }}"
+                                        alt="blog post">
                                 </a>
                             </div>
                             <div class="d-flex justify-content-between">
@@ -66,7 +68,11 @@
                             @foreach($randomPosts as $post)
                                 <div class="col-md-6 blog-post" data-aos="fade-up">
                                     <div class="blog-post-thumbnail-wrapper">
-                                        <img src="{{ $post->preview_image ? asset('/storage/'.$post->preview_image) : asset('/storage/images/aNoPhoto.png') }}" alt="blog post">
+                                        <a href="{{ route('post.show', $post->id) }}" class="blog-post-permalink">
+                                            <img
+                                                src="{{ $post->preview_image ? asset('/storage/'.$post->preview_image) : asset('/storage/aNoPhoto.png') }}"
+                                                alt="blog post">
+                                        </a>
                                     </div>
                                     <div class="d-flex justify-content-between">
                                         <p class="blog-post-category">{{ $post->category->title }}</p>
@@ -103,7 +109,7 @@
                             <li class="post">
                                 <a href="{{ route('post.show', $post->id) }}" class="post-permalink media">
                                     <img
-                                        src="{{ $post->preview_image ? asset('/storage/'.$post->preview_image) : asset('/storage/images/aNoPhoto.png') }}"
+                                        src="{{ $post->preview_image ? asset('/storage/'.$post->preview_image) : asset('/storage/aNoPhoto.png') }}"
                                         alt="blog post">
                                     <div class="media-body">
                                         <h6 class="post-title">{{ $post->title }}</h6>
@@ -119,7 +125,6 @@
                          class="w-100">
                 </div>
             </div>
-        </div>
         </div>
     </main>
 @endsection

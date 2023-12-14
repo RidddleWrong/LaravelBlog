@@ -3,12 +3,12 @@
     <main class="blog-post">
         <div class="container">
             <h1 class="edica-page-title" data-aos="fade-up">{{ $post->title }} blog</h1>
-            {{--     For changing date-time lang      --}}
+            {{--     For changing date-time lang use translatedFormat() and Carbon:setLocale in AppServiceProvider boot()     --}}
             {{--            <p class="edica-blog-post-meta" data-aos="fade-up" data-aos-delay="200">Written by {{ $post->author_name }}• {{ $post->created_at->translatedFormat('F') }} {{ $post->created_at->day }} {{ $post->created_at->year }} {{ $post->created_at->format('H:i:s') }}• • Featured • 4 Comments</p>--}}
             <p class="edica-blog-post-meta" data-aos="fade-up" data-aos-delay="200">Written by {{ $post->author->name }}
                 • {{ $post->created_at->format('F d Y • H:i') }} • {{ $post->comments->count() }} Comments</p>
             <section class="blog-post-featured-img text-center" data-aos="fade-up" data-aos-delay="300">
-                <img src="{{ $post->main_image ? asset('/storage/'.$post->main_image) : asset('/storage/images/aNoPhoto.png') }}" alt="featured image" class="w-75">
+                <img src="{{ $post->main_image ? asset('/storage/'.$post->main_image) : asset('/storage/aNoPhoto.png') }}" alt="featured image" class="w-75">
             </section>
             <section class="post-content">
                 <div class="row">
@@ -53,7 +53,7 @@
                             @foreach($relatedPosts as $relatedPost)
                                 <div class="col-md-4" data-aos="fade-right" data-aos-delay="100">
                                     <a href="{{ route('post.show', $relatedPost->id) }}">
-                                        <img src="{{ $relatedPost->preview_image ? asset('/storage/'.$relatedPost->preview_image) : asset('/storage/images/aNoPhoto.png') }}" alt="related post" class="post-thumbnail">
+                                        <img src="{{ $relatedPost->preview_image ? asset('/storage/'.$relatedPost->preview_image) : asset('/storage/aNoPhoto.png') }}" alt="related post" class="post-thumbnail">
                                     </a>
                                     <p class="post-category">{{ $relatedPost->category->title }}</p>
                                     <a href="{{ route('post.show', $relatedPost->id) }}">

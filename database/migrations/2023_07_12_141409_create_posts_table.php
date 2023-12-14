@@ -16,15 +16,11 @@ return new class extends Migration {
             $table->id();
             $table->string('title');
             $table->text('content');
-            $table->unsignedBigInteger('author_id');
-            $table->unsignedBigInteger('category_id')->nullable();
+            $table->foreignId('category_id')->constrained()->onDelete('cascade');
+            $table->foreignId('author_id')->constrained('users');
+            $table->string('preview_image')->nullable();
+            $table->string('main_image')->nullable();
             $table->timestamps();
-
-            $table->index('category_id', 'post_category_idx');
-            $table->foreign('category_id', 'post_category_fk')->references('id')->on('categories');
-
-            $table->index('author_id', 'post_author_idx');
-            $table->foreign('author_id', 'post_author_fk')->references('id')->on('users');
         });
     }
 
