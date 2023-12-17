@@ -20,8 +20,8 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->unsignedSmallInteger('role')->default(1)->comment('0 - Admin, 1 - User');
-            $table->rememberToken();
             $table->timestamps();
+            $table->rememberToken();
         });
     }
 
