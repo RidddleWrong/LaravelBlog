@@ -8,8 +8,8 @@
                 <div class="col-sm-6 d-flex align-items-baseline">
                     <h1 class="m-0">{{ $tag->title }}</h1>
                     <a href="{{route('admin.tag.edit', $tag->id)}}" class="text-success ml-2 mr-2"><i class="fas fa-pencil-alt"></i></a>
-                    <form action="{{ route('admin.tag.delete', $tag->id) }}"
-                          method="POST">
+                    <form action="{{ route('admin.tag.delete', $tag->id) }}" method="POST"
+                          onsubmit="if(confirm('Do you really want to delete this item?')) return true; else return false;">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="border-0 bg-transparent">

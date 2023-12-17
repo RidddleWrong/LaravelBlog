@@ -49,8 +49,8 @@
                                         <td class="text-center"><a href="{{route('admin.user.edit', $user->id)}}"
                                                class="text-success"><i class="fas fa-pencil-alt"></i></a></td>
                                         <td class="text-center">
-                                            <form action="{{ route('admin.user.delete', $user->id) }}"
-                                                  method="POST">
+                                            <form action="{{ route('admin.user.delete', $user->id) }}" method="POST"
+                                                  onsubmit="if(confirm('Do you really want to delete this item?')) return true; else return false;">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="border-0 bg-transparent">
