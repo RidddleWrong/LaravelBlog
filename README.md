@@ -11,47 +11,36 @@
    composer update
     ```
 
-2. Використовуйте файл `.env.example`, щоб створити файл `.env`. Вкажіть назву бази даних, з якою ви плануєте працювати. Потім виконайте:
+## Створення .env файлу
+2. За допомогою `.env.example`, створіть файл `.env`. В параметрі DB_DATABASE, вкажіть назву бази даних з якою ви плануєте працювати. Потім виконайте:
     ```bash
     php artisan key:generate # Генерує APP_KEY в .env
     ```
 
 ## Ініціалізація бази даних
 
-3. Оберіть один з варіантів:
+3. Запустіть наступну команду:
+    ```bash
+    php artisan migrate --seed # Випадкові зображення генеруються за допомогою `PostFactory`.
+    ```
+    - При видаленні всіх дефолтних зображень з папки `public/storage/images` використайте папку `public/storage/images_copy` і оновіть зобжраження 
 
-    - **Варіант 1: Імпорт SQL-файлу**
-        - Імпортуйте `LaravelBlog.sql` (знаходиться в кореневому каталозі) до вашої бази даних. Назвіть базу даних відповідно (зверніть увагу на назву для файлу `.env`).
-
-    - **Варіант 2: Використання функціоналу фабрики**
-        - Запустіть наступну команду для створення таблиць і заповнення бази даних:
-            ```
-            php artisan migrate --seed
-            ```
-        - В цьому варіанті генеруються випадкові зображення за допомогою `PostFactory`, уникнувши необхідності налаштовувати їх вручну.
-
-## Створення символічного посилання на сховище
+## Символічне посилання
 
 4. Створіть символічне посилання `public/storage`:
-    ```
+    ```bash
     php artisan storage:link
     ```
-   Це дозволить нам використовувати зображення за допомогою методу `asset()` з папки public.
+   - Дозволяє використовувати зображеннь за допомогою методу `asset()` з папки `public/storage/images`.
 
-## Доступ до панелі адміністратора
+## Адміністративна панель
 
-5. Для доступу до панелі адміністратора:
-
-    - **Варіант 1: Якщо в пункті 3 ви використали LaravelBlog.sql опцію**
-        - Увійдіть з наступними обліковими даними:
-            - Електронна пошта: admin@admin.com
-            - Пароль: 1 (для всіх користувачів)
-        - На головній сторінці блогу натисніть кнопку "personal" у правому верхньому куті, перейдіть у свій обліковий запис і натисніть кнопку "Панель адміністратора" в лівому боці.
-
-    - **Варіант 2: Якщо в пункті 3 ви використали опцію фабрик**
-        - Створіть або відредагуйте існуючого користувача, встановіть роль з 1 (користувач) на 0 (адміністратор), і якщо потрібно змініть імеїл.
-        - Виконайте кроки з Варіанту 1, замінюючи електронну адресу на свою відредаговану версію.
-
+5. Для доступу до Панелі адміністратора:
+    - Увійдіть за допомогою наступних облікових даних:
+        - Email: admin@gmail.com (роль Admin - з доступом до адміністративної панелі) АБО user@gmail.com (роль User - без доступу до адміністративної панелі)
+        - Пароль: встановлено як 1 (для всіх користувачів)
+    - На головній сторінці блогу натисніть на особистий значок у верхньому правому куті, перейдіть до свого облікового запису
+    - Нажміть на іконку "Admin Panel" у лівій боковій панелі (тільки для адміністраторів).
 
 
 # LaravelBlog Project
@@ -67,24 +56,20 @@ Welcome to the LaravelBlog project. This README provides essential information f
     composer update
     ```
 
-2. Use the `.env.example` file to create a `.env` file. Specify the database name you intend to use. Then run:
+## Creating .env file
+
+2. Use the `.env.example` file to create an`.env` file. Specify the database name you intend to work with. Then run:
     ```bash
     php artisan key:generate # Generates APP_KEY in .env
     ```
 
 ## Database Initialization
 
-3. Choose one of the following options:
-
-    - **Option 1: Import SQL File**
-        - Import `LaravelBlog.sql` (found in the root directory) into your database. Name your database accordingly and note the name in the `.env` file.
-
-    - **Option 2: Use Factory Functionality**
-        - Run the following command to create tables and seed the database:
-            ```bash
-            php artisan migrate --seed
-            ```
-        - This option generates random images using the `PostFactory`, eliminating the need to set them manually.
+3. Run the following command:
+    ```bash
+    php artisan migrate --seed # The random images are generated using the `PostFactory`
+    ```
+   - When all default images are deleted from the `public/storage/images` folder, use the `public/storage/images_copy` folder and update the images.
 
 ## Storage Link
 
@@ -92,21 +77,17 @@ Welcome to the LaravelBlog project. This README provides essential information f
     ```bash
     php artisan storage:link
     ```
-   This enables possibility of using images with the `asset()` method from the public folder.
+   - Enables images usage with the `asset()` method from the `public/storage/images` folder.
 
-## Admin Panel Access
+## Admin Panel 
 
 5. To access the Admin Panel:
-
-    - **Option 1: If you chose the LaravelBlog.sql option in step 3**
-        - Login with the following credentials:
-            - Email: admin@admin.com
-            - Password: 1 (for all users)
-        - On the main blog page, click the "Personal" button in the top-right, navigate to your account, and click the Admin Panel button in the left sidebar.
-
-    - **Option 2: If you chose the factory option in step 3**
-        - Create or edit an existing user, set the role value to 0(admin), and change the email if needed.
-        - Follow the steps from Option 1, replacing the email with your adjusted version.
+    - Login with the following credentials:
+        - Email: admin@gmail.com (role Admin - with admin panel acess) OR user@gmail.com (role User - no admin panel access)
+        - Password: set to 1 (for all users)
+    - On the main blog page, click the personal icon in the top-right, navigate to your account
+    - Click the Admin Panel icon in the left sidebar (only for admin users).
+    
 
 
 

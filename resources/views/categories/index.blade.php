@@ -5,11 +5,11 @@
         <div class="container">
             <h1 class="edica-page-title" data-aos="fade-up">Categories list</h1>
             <section class="d-flex justify-content-center">
-                <div class="list-group w-25 text-center">
-                    <table class="table table-striped">
+                <div class="list-group w-100 text-center">
+                    <table class="table table-bordered">
                         <thead>
                         <tr>
-                            <th scope="col">#</th>
+                            <th scope="col">№</th>
                             <th scope="col">Category</th>
                         </tr>
                         </thead>

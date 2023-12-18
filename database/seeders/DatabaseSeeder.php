@@ -14,6 +14,10 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $users = User::factory(10)->create();
+        if ($users->count() > 1 ) {
+            $users[0]->update(['email' => 'admin@gmail.com', 'role' => 0]);
+            $users[1]->update(['email' => 'user@gmail.com', 'role' => 1]);
+        }
         Category::factory(3)->create();
         $posts = Post::factory(30)->create();
         $tags = Tag::factory(6)->create();

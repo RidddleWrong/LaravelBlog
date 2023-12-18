@@ -10,7 +10,7 @@
                     <h3 class="edica-page-title text-left" data-aos="fade-up">Nothing found by search</h3>
                 @endif
             @else
-                <h3 class="edica-page-title" data-aos="fade-up">The blogs</h3>
+                <h3 class="edica-page-title" data-aos="fade-up">Blog</h3>
             @endif
             <section class="featured-posts-section">
                 <div class="row">
@@ -105,14 +105,14 @@
                 <div class="widget widget-post-list">
                     <h5 class="widget-title" style="font-size: 30px">Top posts</h5>
                     <ul class="post-list">
-                        @foreach($likedPosts as $post)
+                        @foreach($likedPosts as $likedPost)
                             <li class="post">
-                                <a href="{{ route('post.show', $post->id) }}" class="post-permalink media">
+                                <a href="{{ route('post.show', $likedPost->id) }}" class="post-permalink media">
                                     <img
-                                        src="{{ $post->preview_image ? asset('/storage/'.$post->preview_image) : asset('/storage/aNoPhoto.png') }}"
+                                        src="{{ $likedPost->preview_image ? asset('/storage/'.$likedPost->preview_image) : asset('/storage/aNoPhoto.png') }}"
                                         alt="blog post">
                                     <div class="media-body">
-                                        <h6 class="post-title">{{ $post->title }}</h6>
+                                        <h6 class="post-title">{{substr($likedPost->title,0,25)}}...</h6>
                                     </div>
                                 </a>
                             </li>

@@ -23,7 +23,7 @@
     <section class="content">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-6">
+                <div class="col-12">
                     <div class="card">
                         <div class="card-body table-responsive p-0">
                             <table class="table table-hover text-nowrap">
@@ -40,11 +40,8 @@
                                     <tr>
                                         <td>{{ $comment->id }}</td>
                                         <td>{{ $comment->message }}</td>
-                                        <td class="text-center"><a
-                                                href="{{route('admin.post.show', $comment->post_id)}}"><i
-                                                    class="fas fa-eye"></i></a></td>
-                                        <td class="text-center"><a href="{{ route('personal.comment.edit', $comment->id) }}"
-                                                                   class="text-success" ><i class="fas fa-pencil-alt"></i></a></td>
+                                        <td class="text-center"><a href="{{route('post.show', $comment->post_id)}}"><i class="fas fa-eye"></i></a></td>
+                                        <td class="text-center"><a href="{{ route('personal.comment.edit', $comment->id) }}" class="text-success" ><i class="fas fa-pencil-alt"></i></a></td>
                                         <td class="text-center">
                                             <form action="{{ route('personal.comment.delete', $comment->id) }}"
                                                   method="POST" onsubmit="if(confirm('Are you sure you want to delete this comment?')) return true; else return false">

@@ -23,15 +23,15 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="edicaMainNav">
-                <ul class="navbar-nav mr-auto mt-2 mt-lg-0 ">
-                    <li class="btn btn-outline-success mr-3">
-                        <a class="nav-link" href="{{ route('post.index') }}">Main</a>
+                <ul class="navbar-nav mr-2 mt-2 mt-lg-0 ">
+                    <li class="btn btn-outline-warning mr-3">
+                        <a class="nav-link" href="{{ route('post.index') }}" style="width: 120px">Main</a>
                     </li>
-                    <li class="btn btn-outline-success mr-3">
+                    <li class="btn btn-outline-info mr-3">
                         <a class="nav-link" href="{{ route('category.index') }}">Categories</a>
                     </li>
                 </ul>
-                <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                <ul class="navbar-nav mr-4 mt-2 mt-lg-0">
                     <li>
                         <form class="d-flex" action="{{ route('post.index') }}" method="get">
                             <select name="category_id" class="form-select border-secondary
@@ -51,20 +51,24 @@
                 </ul>
                 <ul class="navbar-nav mt-2 mt-lg-0">
                     @auth()
-                        <li class="mr-3 btn btn-outline-primary mr-3">
-                            <a class="nav-link" href="{{ route('personal.main.index') }}">Personal</a>
+                        <li>
+                            <a class="mr-3 nav-link btn btn-outline-primary" href="{{ route('personal.main.index') }}" style="width: 100px"><i class="fas fa-user"></i></a>
+                            {{--nav-link - default black color text--}}
                         </li>
-                        <form action="{{ route('logout') }}" class="nav-item btn btn-outline-danger" method="post">
+                        <form action="{{ route('logout') }}" class="nav-item" method="post">
                             @csrf
-                            <input type="submit" class="btn font-weight-bold" value="Logout">
+                            <button type="submit" class="nav-link btn btn-outline-warning" style="width: 100px">
+                                <i class="fas fa-sign-out-alt" role="button"></i>
+                            </button>
+{{--                            <input type="submit" class="btn font-weight-bold" value="Logout">--}}
                         </form>
                     @endauth
                     @guest()
-                        <li class="mr-3 btn btn-primary">
-                            <a class="nav-link" href="{{ route('login') }}"> {{ __('Sign in') }}</a>
+                        <li class="mr-3">
+                            <a class="nav-link btn btn-primary" href="{{ route('login') }}"> {{ __('Sign in') }}</a>
                         </li>
-                        <li class="btn btn-warning">
-                            <a class="nav-link" href="{{ route('register') }}"> {{ __('Sign up') }}</a>
+                        <li class="">
+                            <a class="nav-link btn btn-warning" href="{{ route('register') }}"> {{ __('Sign up') }}</a>
                         </li>
                     @endguest
                 </ul>

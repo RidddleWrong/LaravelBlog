@@ -22,7 +22,7 @@ class PostFactory extends Factory
         $imageFiles = File::allFiles(public_path('storage/images'));
         $randomImageName = $this->faker->randomElement($imageFiles)->getFilename();
         return [
-            'title' => fake()->sentence(random_int(1, 3)),
+            'title' => fake()->sentence(random_int(4, 8)),
             'content' => '<p><i>'.fake()->text(5000).'</p></i>',// tags <p><i> for simulating creating post using form features
             'author_id' => User::pluck('id')->random(),
             'category_id' => Category::pluck('id')->random(),
