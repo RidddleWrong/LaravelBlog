@@ -5,42 +5,40 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes(['verify' => true]);//verify true sends the verify link to user that registered himself
 
-Route::get('/', function () {
-    return redirect()->route('post.index');
-});
+Route::redirect('/','posts');
 
-Route::group(['namespace' => 'App\Http\Controllers\Post', 'prefix' => 'posts'], function () {
+Route::namespace('App\Http\Controllers\Post')->prefix('posts')->group(function () {
     Route::get('/', 'IndexController')->name('post.index');
     Route::get('/{post}', 'ShowController')->name('post.show');
 
-    Route::group(['namespace' => 'Comment', 'prefix' => '{post}/comments'], function () {
+    Route::namespace('Comment')->prefix('{post}/comments')->group(function () {
         Route::post('/', 'StoreController')->name('post.comment.store');
     });
 
-    Route::group(['namespace' => 'Like', 'prefix' => '{post}/likes'], function () {
+    Route::namespace('Like')->prefix('{post}/likes')->group(function () {
         Route::post('/', 'StoreController')->name('post.like.store');
     });
-
 });
-Route::group(['namespace' => 'App\Http\Controllers\Category', 'prefix' => 'categories'], function () {
+
+Route::namespace('App\Http\Controllers\Category')->prefix('categories')->group(function () {
     Route::get('/', 'IndexController')->name('category.index');
 
-    Route::group(['namespace' => 'Post', 'prefix' => '{category}/posts'], function () {
+    Route::namespace('Post')->prefix('{category}/posts')->group(function () {
         Route::get('/', 'ShowController')->name('category.post.show');
     });
 });
 
-Route::group(['namespace' => 'App\Http\Controllers\Personal', 'prefix' => 'personal', 'middleware' => ['auth', 'verified']], function () {
-    Route::group(['namespace' => 'Main', 'prefix' => 'main'], function () {
+Route::middleware(['auth', 'verified'])->prefix('personal')->namespace('App\Http\Controllers\Personal')->group(function () {
+    Route::namespace('Main')->prefix('main')->group(function () {
         Route::get('/', 'IndexController')->name('personal.main.index');
     });
 
-    Route::group(['namespace' => 'Liked', 'prefix' => 'liked'], function () {
+    Route::namespace('Liked')->prefix('liked')->group(function () {
         Route::get('/', 'IndexController')->name('personal.liked.index');
         Route::delete('/{post}', 'DeleteController')->name('personal.liked.delete');
     });
 
-    Route::group(['namespace' => 'Comment', 'prefix' => 'comments'], function () {
+    Route::namespace('Comment')->prefix('comments')->group(function () {
         Route::get('/', 'IndexController')->name('personal.comment.index');
         Route::get('/{comment}/edit', 'EditController')->name('personal.comment.edit');
         Route::patch('/{comment}', 'UpdateController')->name('personal.comment.update');
@@ -48,12 +46,12 @@ Route::group(['namespace' => 'App\Http\Controllers\Personal', 'prefix' => 'perso
     });
 });
 
-Route::group(['namespace' => 'App\Http\Controllers\Admin', 'prefix' => 'admin', 'middleware' => ['auth', 'admin', 'verified']], function () {
-    Route::group(['namespace' => 'Main'], function () {
+Route::middleware(['auth', 'admin', 'verified'])->prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function () {
+    Route::namespace('Main')->group(function () {
         Route::get('/', 'IndexController')->name('admin.main.index');
     });
 
-    Route::group(['namespace' => 'Post', 'prefix' => 'posts'], function () {
+    Route::namespace('Post')->prefix('posts')->group(function () {
         Route::get('/', 'IndexController')->name('admin.post.index');
         Route::get('/create', 'CreateController')->name('admin.post.create');
         Route::post('/', 'StoreController')->name('admin.post.store');
@@ -63,7 +61,7 @@ Route::group(['namespace' => 'App\Http\Controllers\Admin', 'prefix' => 'admin', 
         Route::delete('/{post}', 'DeleteController')->name('admin.post.delete');
     });
 
-    Route::group(['namespace' => 'Category', 'prefix' => 'categories'], function () {
+    Route::namespace('Category')->prefix('categories')->group(function () {
         // Коли ми даємо нейми в цьому неймспейсі, то ці рути шукають де до них звертаються в коді (в нашому разі sidebar.blade.php )
         // І якщо знаходять використання якогось нейму, то його відображення в якості url буде результатом складання всіх префіксів в группах яких знаходиться данний рут. У нашому випадку рут знаходиться всередині неймспейсів admin and category і мають префікси admin and categories. Між ними стоятимуть слєші у самій ссилці: admin/categories
         Route::get('/', 'IndexController')->name('admin.category.index');
@@ -75,7 +73,7 @@ Route::group(['namespace' => 'App\Http\Controllers\Admin', 'prefix' => 'admin', 
         Route::delete('/{category}', 'DeleteController')->name('admin.category.delete');
     });
 
-    Route::group(['namespace' => 'Tag', 'prefix' => 'tags'], function () {
+    Route::namespace('Tag')->prefix('tags')->group(function () {
         Route::get('/', 'IndexController')->name('admin.tag.index');
         Route::get('/create', 'CreateController')->name('admin.tag.create');
         Route::post('/', 'StoreController')->name('admin.tag.store');
@@ -85,7 +83,7 @@ Route::group(['namespace' => 'App\Http\Controllers\Admin', 'prefix' => 'admin', 
         Route::delete('/{tag}', 'DeleteController')->name('admin.tag.delete');
     });
 
-    Route::group(['namespace' => 'User', 'prefix' => 'users'], function () {
+    Route::namespace('User')->prefix('users')->group(function () {
         Route::get('/', 'IndexController')->name('admin.user.index');
         Route::get('/create', 'CreateController')->name('admin.user.create');
         Route::post('/', 'StoreController')->name('admin.user.store');
