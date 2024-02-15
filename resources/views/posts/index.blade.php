@@ -14,7 +14,7 @@
             @endif
             <section class="featured-posts-section">
                 <div class="row">
-                    @foreach($posts as $post)
+                    @forelse($posts as $post)
                         <div class="col-md-4 fetured-post blog-post">
                             <div class="blog-post-thumbnail-wrapper">
                                 <a href="{{ route('post.show', $post->id) }}" class="blog-post-permalink">
@@ -51,7 +51,9 @@
                                 </a>
                             </div>
                         </div>
-                    @endforeach
+                    @empty
+                        {{__('No posts found') }}
+                    @endforelse
                 </div>
                 <div class="row mb-5">
                     <div class="mx-auto" style="margin-top: -80px">

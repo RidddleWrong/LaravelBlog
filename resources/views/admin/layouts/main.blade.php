@@ -54,8 +54,10 @@
     </nav>
     <!-- /.navbar -->
 
-    <!-- Main Sidebar Container -->
 
+
+    <!-- Main Sidebar Container -->
+    <!-- Includes -->
 @include('admin.includes.sidebar')
 
 <!-- Content Wrapper. Contains page content -->

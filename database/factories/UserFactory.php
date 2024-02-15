@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -22,6 +23,7 @@ class UserFactory extends Factory
             'email' => $this->faker->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => '$2y$10$l9l8aj86CttPv2987/G0teGLA64TrH7cTGepFHQpR6jJbBRDf/WIa', // password: 1
+            'role' => User::ROLE_READER,
             'remember_token' => Str::random(10),
         ];
     }
