@@ -1,4 +1,4 @@
-# LaravelBlog проект (eng version below)
+# LaravelBlog проект (Eng version will be below)
 
 Ласкаво просимо до проекту LaravelBlog. Цей README містить необхідну інформацію для комфортної роботи з проектом. Дотримуйтеся цих кроків для початку:
 
@@ -8,22 +8,21 @@
    ```bash
    npm install
    composer install
-   composer update
-    ```
+   ```
 
 ## Створення .env файлу
 2. За допомогою `.env.example`, створіть файл `.env`. В параметрі DB_DATABASE, вкажіть назву бази даних з якою ви плануєте працювати. Потім виконайте:
     ```bash
-    php artisan key:generate # Генерує APP_KEY в .env
+    php artisan key:generate
     ```
 
 ## Ініціалізація бази даних
 
 3. Запустіть наступну команду:
     ```bash
-    php artisan migrate --seed # Випадкові зображення генеруються за допомогою `PostFactory`.
+    php artisan migrate --seed # За допомогою `PostFactory` генеруються випадкові зображення.
     ```
-    - При видаленні всіх дефолтних зображень з папки `public/storage/images` використайте папку `public/storage/images_copy` і оновіть зобжраження 
+    - При видаленні всіх дефолтних зображень з папки `public/storage/images` використайте папку `public/storage/images_copy` і оновіть зображення 
 
 ## Символічне посилання
 
@@ -31,7 +30,7 @@
     ```bash
     php artisan storage:link
     ```
-   - Дозволяє використовувати зображеннь за допомогою методу `asset()` з папки `public/storage/images`.
+   - Дозволяє використовувати зображення за допомогою методу `asset()` з папки `public/storage/images`.
 
 ## Адміністративна панель
 
@@ -53,14 +52,13 @@ Welcome to the LaravelBlog project. This README provides essential information f
     ```bash
     npm install
     composer install
-    composer update
     ```
 
 ## Creating .env file
 
 2. Use the `.env.example` file to create an`.env` file. Specify the database name you intend to work with. Then run:
     ```bash
-    php artisan key:generate # Generates APP_KEY in .env
+    php artisan key:generate 
     ```
 
 ## Database Initialization
