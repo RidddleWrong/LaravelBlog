@@ -15,7 +15,7 @@ class Category extends Model
     protected $guarded = false;
     protected $cascadeDeletes = ['posts'];
 
-    function posts(){
+    public function posts(){
         return $this->hasMany(Post::class);
     }
 }

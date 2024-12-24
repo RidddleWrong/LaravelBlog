@@ -11,7 +11,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Post extends Model
 {
     use HasFactory, Filterable, SoftDeletes, CascadeSoftDeletes;
-
     protected $table = 'posts';
     protected $guarded = false;
     protected $cascadeDeletes = ['comments'];

@@ -42,6 +42,6 @@ class StoreUserJob implements ShouldQueue
         $this->data['password'] = Hash::make($password);
         $user = User::firstOrCreate(['email' => $this->data['email']],$this->data);
         Mail::to($this->data['email'])->send(new PasswordMail($password));
-        event(new Registered($user));//sends the verify link to user u have registered
+        event(new Registered($user)); //sends the verify link to user u have registered
     }
 }

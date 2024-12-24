@@ -10,7 +10,9 @@
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="{{ route('admin.main.index') }}">Main</a></li>
+                        <li class="breadcrumb-item"><a
+                                href="{{ route('admin.main.index') }}">Main</a>
+                        </li>
                         <li class="breadcrumb-item">Posts</li>
                     </ol>
                 </div><!-- /.col -->
@@ -24,7 +26,8 @@
         <div class="container-fluid">
             <div class="row mb-3">
                 <div class="col-1">
-                    <a href="{{ route('admin.post.create') }}" class="btn btn-block btn-primary">Create</a>
+                    <a href="{{ route('admin.post.create') }}"
+                       class="btn btn-block btn-primary">Create</a>
                 </div>
             </div>
             <div class="row">
@@ -36,7 +39,8 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>POST</th>
-                                    <th colspan="3" class="text-center">ACTION</th>
+                                    <th colspan="3" class="text-center">ACTION
+                                    </th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -44,17 +48,26 @@
                                     <tr>
                                         <td>{{ $post->id }}</td>
                                         <td>{{ $post->title }}</td>
-                                        <td class="text-center"><a href="{{route('admin.post.show', $post->id)}}"><i
-                                                    class="fas fa-eye"></i></a></td>
-                                        <td class="text-center"><a href="{{route('admin.post.edit', $post->id)}}"
-                                               class="text-success"><i class="fas fa-pencil-alt"></i></a></td>
+                                        <td class="text-center"><a
+                                                href="{{route('admin.post.show', $post->id)}}"><i
+                                                    class="fas fa-eye"></i></a>
+                                        </td>
+                                        <td class="text-center"><a
+                                                href="{{route('admin.post.edit', $post->id)}}"
+                                                class="text-success"><i
+                                                    class="fas fa-pencil-alt"></i></a>
+                                        </td>
                                         <td class="text-center">
-                                            <form action="{{ route('admin.post.delete', $post->id) }}" method="POST"
-                                                  onsubmit="if(confirm('Do you really want to delete this item?')) return true; else return false;">
+                                            <form
+                                                action="{{ route('admin.post.delete', $post->id) }}"
+                                                method="POST"
+                                                onsubmit="if(confirm('Do you really want to delete this item?')) return true; else return false;">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="border-0 bg-transparent">
-                                                    <i class="fas fa-trash-alt text-danger" role="button"></i>
+                                                <button type="submit"
+                                                        class="border-0 bg-transparent">
+                                                    <i class="fas fa-trash-alt text-danger"
+                                                       role="button"></i>
                                                 </button>
                                             </form>
                                         </td>

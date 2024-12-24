@@ -16,7 +16,7 @@ class IndexController extends Controller
         $filter = app()->make(PostFilter::class, ['queryParams'=>array_filter($data)]);
 
         $posts = Post::filter($filter)->paginate(6);
-        $randomPosts = Post::inRandomOrder()->take(4)->get();//inRandomOrder->take(4) and not random(4) considering testing. With random(4) if no 4 items in test :memory: database then we will encounter problems
+        $randomPosts = Post::inRandomOrder()->take(4)->get(); // inRandomOrder->take(4) and not random(4) considering testing. With random(4) if no 4 items in test :memory: database then we will encounter errors
         $likedPosts = Post::orderBy('user_likes_count', 'DESC')->take(4)->get();
         $categories = Category::all();
 
