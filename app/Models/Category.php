@@ -11,7 +11,7 @@ class Category extends Model
 {
     use HasFactory, SoftDeletes, CascadeSoftDeletes;
 
-    protected $table = 'categories';
+    public $timestamps = false;
     protected $guarded = false;
     protected $cascadeDeletes = ['posts'];
 

@@ -16,25 +16,29 @@
     php artisan key:generate
     ```
 
+## Символічне посилання
+
+3. Створіть символічне посилання `public/storage`:
+    ```bash
+    php artisan storage:link
+    ```
+    - Дозволяє використовувати зображення за допомогою методу `asset()` з папки `public/storage/images`.
+
+## Налаштування зображень
+
+4. Перенесіть директорії public/factory/ images і images_copy у створену вище 'папку' public/storage
+
 ## Ініціалізація бази даних
 
-3. Запустіть наступну команду:
+5. Запустіть наступну команду:
     ```bash
     php artisan migrate --seed # За допомогою `PostFactory` генеруються випадкові зображення.
     ```
     - При видаленні всіх дефолтних зображень з папки `public/storage/images` використайте папку `public/storage/images_copy` і оновіть зображення 
 
-## Символічне посилання
-
-4. Створіть символічне посилання `public/storage`:
-    ```bash
-    php artisan storage:link
-    ```
-   - Дозволяє використовувати зображення за допомогою методу `asset()` з папки `public/storage/images`.
-
 ## Адміністративна панель
 
-5. Для доступу до Панелі адміністратора:
+6. Для доступу до Панелі адміністратора:
     - Увійдіть за допомогою наступних облікових даних:
         - Email: admin@gmail.com (роль Admin - з доступом до адміністративної панелі) АБО user@gmail.com (роль User - без доступу до адміністративної панелі)
         - Пароль: встановлено як 1 (для всіх користувачів)
@@ -61,25 +65,30 @@ Welcome to the LaravelBlog project. This README provides essential information f
     php artisan key:generate 
     ```
 
-## Database Initialization
-
-3. Run the following command:
-    ```bash
-    php artisan migrate --seed # The random images are generated using the `PostFactory`
-    ```
-   - When all default images are deleted from the `public/storage/images` folder, use the `public/storage/images_copy` folder and update the images.
-
 ## Storage Link
 
-4. Create a symbolic link `public/storage`:
+3. Create a symbolic link `public/storage`:
     ```bash
     php artisan storage:link
     ```
-   - Enables images usage with the `asset()` method from the `public/storage/images` folder.
+    - Enables images usage with the `asset()` method from the `public/storage/images` folder.
+
+## Image transfer
+
+4. Transfer the public/factory/ images and images_copy folders into created above 'directory' public/storage      
+
+## Database Initialization
+
+5. Run the following command:
+    ```bash
+    php artisan migrate --seed # The random images are generated using the `PostFactory`
+    ```
+    - When all default images are deleted from the `public/storage/images` folder, use the `public/storage/images_copy` folder and update the images.
+
 
 ## Admin Panel 
 
-5. To access the Admin Panel:
+6. To access the Admin Panel:
     - Login with the following credentials:
         - Email: admin@gmail.com (role Admin - with admin panel acess) OR user@gmail.com (role User - no admin panel access)
         - Password: set to 1 (for all users)
