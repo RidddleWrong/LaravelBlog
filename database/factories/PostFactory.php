@@ -19,8 +19,8 @@ class PostFactory extends Factory
      */
     public function definition()
     {
-        $imageFiles = File::allFiles(public_path('storage/images'));
-        $randomImageName = $this->faker->randomElement($imageFiles)->getFilename();
+        $imageFiles = File::allFiles(public_path('factory/images'));
+
         return [
             'title' => fake()->sentence(random_int(4, 8)),
             'content' => '<p><i>'.fake()->text(5000).'</p></i>',// tags <p><i> for simulating creating post using form features
