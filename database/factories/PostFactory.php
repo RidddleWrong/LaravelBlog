@@ -19,7 +19,7 @@ class PostFactory extends Factory
      */
     public function definition()
     {
-        $imageFiles = File::allFiles(public_path('factory/images'));
+        $imageFiles = File::allFiles(public_path('storage/images'));
 
         return [
             'title' => fake()->sentence(random_int(4, 8)),

@@ -61,25 +61,30 @@ Welcome to the LaravelBlog project. This README provides essential information f
     php artisan key:generate 
     ```
 
-## Database Initialization
-
-3. Run the following command:
-    ```bash
-    php artisan migrate --seed # The random images are generated using the `PostFactory`
-    ```
-   - When all default images are deleted from the `public/storage/images` folder, use the `public/storage/images_copy` folder and update the images.
-
 ## Storage Link
 
-4. Create a symbolic link `public/storage`:
+3. Create a symbolic link `public/storage`:
     ```bash
     php artisan storage:link
     ```
-   - Enables images usage with the `asset()` method from the `public/storage/images` folder.
+    - Enables images usage with the `asset()` method from the `public/storage/images` folder.
+
+## Image transfer
+
+4. Transfer the public/factory/ images and images_copy folders into created above 'directory' public/storage      
+
+## Database Initialization
+
+5. Run the following command:
+    ```bash
+    php artisan migrate --seed # The random images are generated using the `PostFactory`
+    ```
+    - When all default images are deleted from the `public/storage/images` folder, use the `public/storage/images_copy` folder and update the images.
+
 
 ## Admin Panel 
 
-5. To access the Admin Panel:
+6. To access the Admin Panel:
     - Login with the following credentials:
         - Email: admin@gmail.com (role Admin - with admin panel acess) OR user@gmail.com (role User - no admin panel access)
         - Password: set to 1 (for all users)
