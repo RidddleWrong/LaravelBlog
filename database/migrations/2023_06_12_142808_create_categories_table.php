@@ -16,8 +16,6 @@ return new class extends Migration {
             $table->id();
             $table->string('title');
             $table->softDeletes();
-            // дз закончить мягкое каскадное удаление в категории и у пользователя
-            $table->timestamps();
         });
     }
 
