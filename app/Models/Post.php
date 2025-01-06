@@ -11,11 +11,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Post extends Model
 {
     use HasFactory, Filterable, SoftDeletes, CascadeSoftDeletes;
-    protected $table = 'posts';
+
     protected $guarded = false;
-    protected $cascadeDeletes = ['comments'];
     protected $withCount = ['userLikes'];
     protected $with = ['category'];
+    protected $cascadeDeletes = ['comments'];
 
     public function tags()
     {
@@ -37,11 +37,10 @@ class Post extends Model
         return $this->hasMany(Comment::class, 'post_id', 'id');
     }
 
-    public function userLikes()
+    public function userLikes() // returns list of user model rows from users table
     {
-        return $this->belongsToMany(User::class, 'post_user_likes', 'post_id','user_id');//returns list of user model rows from users table
+        return $this->belongsToMany(User::class, 'post_user_likes', 'post_id', 'user_id');
     }
-
 
 
 }
