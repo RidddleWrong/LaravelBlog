@@ -20,6 +20,11 @@ class CommentObserver
         $text = 'New comment was added to your post <a href="' .route('post.show', $post->id). '">' . e($post->title) . '</a>';
         $subject = 'New comment was added to your post';
         // qweqweqweqweqwe
+        // 222222222222222
+        // after 4th
+        // next
+        // next
+        // commit
         SendEmailJob::dispatch($email, $text, $subject);
     }
 }
