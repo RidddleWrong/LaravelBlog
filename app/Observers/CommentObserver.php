@@ -24,6 +24,7 @@ class CommentObserver
         // after 4th
         // next
         // next
+        // commit
         SendEmailJob::dispatch($email, $text, $subject);
     }
 }
