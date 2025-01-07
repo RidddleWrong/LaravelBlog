@@ -19,7 +19,7 @@ class CommentObserver
         $email = $post->author->email;
         $text = 'New comment was added to your post <a href="' .route('post.show', $post->id). '">' . e($post->title) . '</a>';
         $subject = 'New comment was added to your post';
-
+        // qweqweqweqweqwe
         SendEmailJob::dispatch($email, $text, $subject);
     }
 }
