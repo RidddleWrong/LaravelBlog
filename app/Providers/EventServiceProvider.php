@@ -2,9 +2,9 @@
 
 namespace App\Providers;
 
-use App\Models\Comment;
+use App\Events\CommentCreated;
+use App\Listeners\SendMailNotification;
 use App\Models\Post;
-use App\Observers\CommentObserver;
 use App\Observers\PostObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -21,6 +21,9 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
+        CommentCreated::class => [
+            SendMailNotification::class,
+        ],
     ];
 
     /**
@@ -30,7 +33,6 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Comment::observe(CommentObserver::class);
         Post::observe(PostObserver::class);
     }
 }

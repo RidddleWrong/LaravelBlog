@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Post\Comment;
 
+use App\Events\CommentCreated;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Post\Comment\StoreRequest;
 use App\Models\Comment;
@@ -14,7 +15,7 @@ class StoreController extends Controller
         $data = $request->validated();
         $data['user_id'] = auth()->user()->id;
         $data['post_id'] = $post->id;
-        Comment::create($data);
+        event(new CommentCreated(Comment::create($data)));
 
         return redirect()->route('post.show', compact('post'));
     }

@@ -1,21 +1,15 @@
 <?php
 
-namespace App\Observers;
+namespace App\Listeners;
 
+use App\Events\CommentCreated;
 use App\Jobs\SendEmailJob;
-use App\Models\Comment;
 
-class CommentObserver
+class SendMailNotification
 {
-    /**
-     * Handle the Comment "created" event.
-     *
-     * @param Comment $comment
-     * @return void
-     */
-    public function created(Comment $comment)
+    public function handle(CommentCreated $event)
     {
-        $post = $comment->post;
+        $post = $event->comment->post;
         $email = $post->author->email;
         $text = 'New comment was added to your post <a href="' .route('post.show', $post->id). '">' . e($post->title) . '</a>';
         $subject = 'New comment was added to your post';
