@@ -24,7 +24,6 @@ class SendMail extends Mailable
     {
         $this->text = $text;
         $this->subject = $subject;
-        \Log::info('SendMail construct');
     }
 
     /**
